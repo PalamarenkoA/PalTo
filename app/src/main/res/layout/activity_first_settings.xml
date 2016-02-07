@@ -22,14 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <com.geekhub.palto.customviews.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:bindingWithOnFocusValidation="@{model.userId}"
-            style="@style/ValidationEditTextStyle"/>
-        <com.geekhub.palto.customviews.LoadingView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
         </LinearLayout>
     </RelativeLayout>
 </layout>
