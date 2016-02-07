@@ -12,11 +12,12 @@ import com.vk.sdk.util.VKUtil;
 
 public class FirstSettingsActivity extends AppCompatActivity {
     FirstSettingsViewModel model;
+    public ActivityFirstSettingsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityFirstSettingsBinding binding = DataBindingUtil.
+        binding = DataBindingUtil.
                 setContentView(this, R.layout.activity_first_settings);
         model = new FirstSettingsViewModel(this);
         binding.setModel(model);
