@@ -17,6 +17,12 @@ public class User {
     String country;
     int countryID;
 
+    public String getPhoto_200() {
+        return photo_200;
+    }
+
+    String photo_200;
+
     public String getName() {
         return name;
     }
@@ -55,6 +61,7 @@ public class User {
 
 
    public User(JSONObject jsonObject) throws JSONException {
+       photo_200 = jsonObject.getString("photo_200");
        name = jsonObject.getString("first_name");
        lastName = jsonObject.getString("last_name");
        id = jsonObject.getString("id");

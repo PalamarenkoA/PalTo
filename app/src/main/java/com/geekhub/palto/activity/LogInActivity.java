@@ -31,7 +31,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private LoginActivityViewModel model;
     Firebase myFirebaseRef;
-
+    SharedPreferences.Editor edit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +56,12 @@ public class LogInActivity extends AppCompatActivity {
             public void onResult(final VKAccessToken res) {
                 // Пользователь успешно авторизовался
 
-                SharedPreferences.Editor edit = PreferenceManager.
+                edit = PreferenceManager.
                         getDefaultSharedPreferences(getApplicationContext()).edit();
                 edit.putString("VKAccessToken", res.accessToken).apply();
                 edit.putString("VKUserID", res.userId).apply();
-                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country"));
+
+                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200"));
                 request.executeSyncWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
@@ -71,6 +72,11 @@ public class LogInActivity extends AppCompatActivity {
                         try {
                             User user = new User(abc.get(0).fields);
                             Log.d("logo",user.getBdate());
+                            edit.putString("VKUserICON",user.getPhoto_200()).apply();
+                            edit.putString("VKUserNAME",user.getName()+" "+user.getLastName()).apply();
+                            SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                            Log.d("logo",srefs.getString("VKUserID","dddd"));
                             myFirebaseRef.child(abc.get(0).fields.getString("id")).setValue(user);
                         } catch (JSONException e) {
                             e.printStackTrace();
