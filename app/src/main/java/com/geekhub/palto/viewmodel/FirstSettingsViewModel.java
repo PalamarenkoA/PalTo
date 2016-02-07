@@ -26,9 +26,18 @@ public class FirstSettingsViewModel {
         this.imageUrl = imageUrl;
     }
 
+    public BindableString getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(BindableString nickName) {
+        this.nickName = nickName;
+    }
+
     FirstSettingsActivity activity;
     BindableString userId = new BindableString();
     BindableString imageUrl = new BindableString();
+    BindableString nickName = new BindableString();
 
     public FirstSettingsViewModel(FirstSettingsActivity activity) {
         this.activity = activity;
