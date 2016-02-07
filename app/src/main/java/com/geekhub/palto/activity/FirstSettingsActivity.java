@@ -20,6 +20,5 @@ public class FirstSettingsActivity extends AppCompatActivity {
                 setContentView(this, R.layout.activity_first_settings);
         model = new FirstSettingsViewModel(this);
         binding.setModel(model);
-
     }
 }

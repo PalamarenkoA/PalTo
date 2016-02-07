@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             app:bindingWithOnFocusValidation="@{model.userId}"
             style="@style/ValidationEditTextStyle"/>
-        <ImageView
+        <com.geekhub.palto.customviews.LoadingView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>
