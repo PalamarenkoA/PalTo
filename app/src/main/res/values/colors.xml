@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="gray">#919191</color>
+    <color name="gray_dark">#454545</color>
+    <color name="white">#ffffff</color>
+    <color name="pressed_item_color">@android:color/holo_blue_dark</color>
+    <color name="checked_item_color">@android:color/holo_blue_light</color>
+    <color name="orange_pressed">#ee5500</color>
+    <color name="orange">#ff6600</color>
+    <color name="gray_ccc">#cccccc</color>
+    <color name="ads_text_color">#666666</color>
+</resources>
