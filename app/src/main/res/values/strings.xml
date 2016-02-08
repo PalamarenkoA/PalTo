@@ -3,4 +3,10 @@
     <string name="select">Select</string>
     <string name="your_reason">Reason</string>
     <integer name="com_vk_sdk_AppId">5249236</integer>
+    <string-array name="animals">
+        <item>Кот</item>
+        <item>Кошка</item>
+        <item>Котёнок</item>
+        <item>Животное</item>
+    </string-array>
 </resources>

@@ -1,0 +1,72 @@
+package com.geekhub.palto.adapter;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.geekhub.palto.R;
+import com.geekhub.palto.object.ItemDialogList;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+/**
+ * Created by andrey on 08.02.16.
+ */
+public class DialogListAdapter extends BaseAdapter{
+    ArrayList <ItemDialogList>dialogArrayList;
+    Context context;
+    public DialogListAdapter(Context context, ArrayList <ItemDialogList>dialogArrayList){
+        this.dialogArrayList = dialogArrayList;
+        this.context = context;
+
+    }
+    @Override
+    public int getCount() {
+        return dialogArrayList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return dialogArrayList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+    static class ViewHolder {
+        ImageView iconImage;
+        TextView nick;
+        TextView lastDate;
+        TextView lastMessage;
+    }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+       ViewHolder viewHolder;
+        if (convertView == null){
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.dialog_list_item, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.iconImage = (ImageView) convertView.findViewById(R.id.iconImage);
+            viewHolder.lastDate = (TextView) convertView.findViewById(R.id.lastDate);
+            viewHolder.lastMessage = (TextView) convertView.findViewById(R.id.lastMessage);
+            viewHolder.nick = (TextView) convertView.findViewById(R.id.nick);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        Picasso.with(context).load(dialogArrayList.get(position).getIconImage()).into(viewHolder.iconImage);
+        viewHolder.lastDate.setText(dialogArrayList.get(position).getLastDate());
+        viewHolder.lastMessage.setText(dialogArrayList.get(position).getLastMessage());
+        viewHolder.nick.setText(dialogArrayList.get(position).getNick());
+
+        return convertView;
+
+    }
+}

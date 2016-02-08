@@ -1,9 +1,16 @@
 package com.geekhub.palto.viewmodel;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import com.geekhub.palto.R;
+import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.binding.BindableBoolean;
 import com.geekhub.palto.binding.BindableString;
@@ -48,7 +55,7 @@ public class FirstSettingsViewModel {
     BindableString nickName = new BindableString();
     HashMap<String, Boolean> interestMap;
 
-    public FirstSettingsViewModel(FirstSettingsActivity activity) {
+    public FirstSettingsViewModel(final FirstSettingsActivity activity) {
         this.activity = activity;
         SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
 
@@ -63,9 +70,21 @@ public class FirstSettingsViewModel {
         testList.add("Bowling2");
         testList.add("Cats and Dogs");
         testList.add("Cats and Dogs2");
-        activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME",""));
+        activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME", ""));
         Picasso.with(activity).load(srefs.getString("VKUserICON","")).into(activity.binding.smallAvatarIv);
-        activity.binding.interestsList.initializeMap(testList);
-        activity.binding.interestsList.initWithStateMap(null);
+        ArrayAdapter<?> adapter =
+                ArrayAdapter.createFromResource(activity, R.array.animals,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        activity.binding.spinner.setAdapter(adapter);
+        activity.binding.spinner2.setAdapter(adapter);
+        activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.startActivity(new Intent(activity,ChatListActivity.class));
+            }
+        });
     }
+
+
+
 }

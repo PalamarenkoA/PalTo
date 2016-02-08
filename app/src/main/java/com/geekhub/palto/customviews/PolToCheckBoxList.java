@@ -1,7 +1,10 @@
 package com.geekhub.palto.customviews;
 
 import android.content.Context;
+import android.location.GpsStatus;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -48,11 +51,12 @@ public class PolToCheckBoxList extends LinearLayout {
                 checkBox.setText(entry.getKey());
                 addView(checkBox);
             }
-    }
+     }
 
     public HashMap<String, Boolean> getStateMapFromCheckBoxes(){
         for (CheckBox c :
                 checkboxes) {
+            Log.d("list","key" + c.getText().toString() + " is" + c.isChecked());
             stateMap.put(c.getText().toString(), c.isChecked());
         }
         return stateMap;

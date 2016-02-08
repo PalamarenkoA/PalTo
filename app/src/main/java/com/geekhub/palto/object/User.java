@@ -1,4 +1,4 @@
-package com.geekhub.palto;
+package com.geekhub.palto.object;
 
 import org.json.JSONException;
 import org.json.JSONObject;

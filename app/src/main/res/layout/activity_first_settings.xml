@@ -54,6 +54,7 @@
                 android:textSize="20sp"
                 android:gravity="center"
                 android:text="Личная информация"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,16 +81,28 @@
                     />
                 </LinearLayout>
             </LinearLayout>
+
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="150dp"
+                android:id="@+id/scrollView" >
 
-                //TODO: Custom view
-                <com.geekhub.palto.customviews.PolToCheckBoxList
-                    android:id="@+id/interests_list"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent">
 
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner"
+                        android:spinnerMode="dropdown" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner2" />
+                </LinearLayout>
             </ScrollView>
 
 
@@ -107,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Сохранить"
-                android:id="@+id/button" />
+                android:id="@+id/buttonSave" />
         </LinearLayout>
 
     </LinearLayout>
