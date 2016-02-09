@@ -23,7 +23,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.FirstSettingsActivity" />
-        <activity android:name=".activity.ChatListActivity"></activity>
+        <activity android:name=".activity.ChatListActivity" />
+        <activity
+            android:name=".activity.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

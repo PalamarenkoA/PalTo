@@ -9,4 +9,5 @@
         <item>Котёнок</item>
         <item>Животное</item>
     </string-array>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>
