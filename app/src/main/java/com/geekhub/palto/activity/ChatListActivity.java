@@ -8,7 +8,6 @@ import android.os.Bundle;
 import com.geekhub.palto.R;
 import com.geekhub.palto.databinding.ActivityChatListBinding;
 import com.geekhub.palto.viewmodel.ChatListViewModel;
-import com.geekhub.palto.viewmodel.FirstSettingsViewModel;
 
 public class ChatListActivity extends AppCompatActivity {
     public ActivityChatListBinding binding;
