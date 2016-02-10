@@ -85,12 +85,48 @@
                 </LinearLayout>
             </LinearLayout>
 
-        <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-            android:id="@+id/test_interest_picker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:pickerLabel="Какие коты Вам нравятся"
-            app:buttonTitle="Вібрать кота"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView" >
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
+                        android:id="@+id/musik_interest_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pickerLabel="Любимая музыка"
+                        app:buttonTitle="Выбрать"/>
+                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
+                        android:id="@+id/film_interest_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pickerLabel="Любимые фильмы"
+                        app:buttonTitle="Выбрать"/>
+                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
+                        android:id="@+id/znakom_interest_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pickerLabel="Цель знакомства"
+                        app:buttonTitle="Выбрать"/>
+                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
+                        android:id="@+id/growth_interest_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pickerLabel="Ваш рост"
+                        app:buttonTitle="Выбрать"/>
+                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
+                        android:id="@+id/eyes_interest_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pickerLabel="Цвет ваших глаз"
+                        app:buttonTitle="Выбрать"/>
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 

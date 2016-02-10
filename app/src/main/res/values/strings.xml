@@ -3,11 +3,130 @@
     <string name="select">Select</string>
     <string name="your_reason">Reason</string>
     <integer name="com_vk_sdk_AppId">5249236</integer>
-    <string-array name="animals">
-        <item>Кот</item>
-        <item>Кошка</item>
-        <item>Котёнок</item>
-        <item>Животное</item>
+
+    <string-array name="eyes">
+        <item> Синий</item>
+        <item> Голубой</item>
+        <item> Серый</item>
+        <item> Зелёный</item>
+        <item> Янтарный</item>
+        <item>  Болотный</item>
+        <item>  Карий</item>
+        <item>  Чёрный</item>
+        <item>  Жёлтый</item>
+        <item>  Фиолетовый</item>
+</string-array>
+    <string-array name="growth">
+        <item> до 150</item>
+        <item>  от 150 до 165</item>
+        <item>  от 165 до 175</item>
+        <item> от 175 до 185</item>
+        <item> от 185 до 200</item>
+        <item>  от 200</item>
+</string-array>
+
+    <string-array name="znakom">
+        <item>Дружба</item>
+        <item>Общение</item>
+        <item>Флирт</item>
+        <item>Отношения</item>
+        <item>Семья</item>
+        <item>Секс</item>
+</string-array>
+
+
+
+    <string-array name="film">
+        <item> Аниме</item>
+        <item> Артхаус</item>
+        <item> Биография</item>
+        <item>  Боевики</item>
+        <item>  Вестерн</item>
+        <item>  Военные фильмы</item>
+        <item>  Детективы</item>
+        <item>  Документальные</item>
+        <item>  Драмы</item>
+        <item>  Исторические фильмы</item>
+        <item>  Комедии</item>
+        <item>  Короткометражные</item>
+        <item> Криминал</item>
+        <item>  Мелодрамы</item>
+        <item> Мистика</item>
+        <item>  Музыкальные программы</item>
+        <item>  Мультфильмы</item>
+        <item>   Мюзиклы</item>
+        <item>   Научные</item>
+        <item>  Образовательные программы</item>
+        <item>  Приключения</item>
+        <item>  Прочее</item>
+        <item>  Семейный</item>
+        <item> Спорт</item>
+        <item> Триллеры</item>
+        <item> Ужасы</item>
+        <item> Фантастика</item>
+        <item>  Фильмы для детей</item>
+        <item> Фэнтези</item>
+        <item>  Эротика</item>
+        <item>  Юмор</item>
+</string-array>
+    <string-array name="musik">
+
+        <item> Альтернатива</item>
+        <item> Альтернативный метал</item>
+        <item>  Альтернативный рок</item>
+        <item>  Арт-рок</item>
+        <item>  Блэк метал</item>
+        <item>   Блюз</item>
+        <item>   Брейкбит</item>
+        <item>   Брейккор</item>
+        <item>   Брит поп</item>
+        <item>  Гаражный рок</item>
+        <item>  Глэм</item>
+        <item> Гранж</item>
+        <item>  Дабстеп</item>
+        <item>  Диско</item>
+        <item>  Джаз</item>
+        <item> Европоп</item>
+        <item> Индастриал</item>
+        <item> Инди</item>
+        <item> Итало-диско</item>
+        <item> Кантри</item>
+        <item>  Классическая музыка</item>
+        <item> Клубная музыка</item>
+        <item> Лаунж</item>
+        <item>  Маткор</item>
+        <item>   Мелодик метал</item>
+        <item>  Металкор</item>
+        <item>  Народная музыка</item>
+        <item>  Нойз</item>
+        <item>  Ню-метал</item>
+        <item>  Панк</item>
+        <item>  Поп</item>
+        <item>  Поп-рок</item>
+        <item>  Постпанк</item>
+        <item>  Прогрессив</item>
+        <item>   Регги</item>
+        <item>  Рок</item>
+        <item>  Рок-н-ролл</item>
+        <item> Рокабилли</item>
+        <item>  Рэп</item>
+        <item> Рэпкор</item>
+        <item>  Ска</item>
+        <item>  Ска-панк</item>
+        <item>  Техно</item>
+        <item>  Транс</item>
+        <item> Нойз</item>
+        <item> Фанк</item>
+        <item>  Фолк</item>
+        <item>   Фолк-метал</item>
+        <item>   Фолк-рок</item>
+        <item>   Хардкор</item>
+        <item>  Хаус</item>
+        <item>  Хип-Хоп</item>
+        <item>  Шансон</item>
+        <item>  Эмо</item>
+        <item>  Эмокор</item>
+
     </string-array>
     <string name="title_activity_chat">ChatActivity</string>
 </resources>

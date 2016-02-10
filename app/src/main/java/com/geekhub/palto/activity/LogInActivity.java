@@ -67,7 +67,6 @@ public class LogInActivity extends AppCompatActivity {
                     public void onComplete(VKResponse response) {
                         super.onComplete(response);
                         VKList abc = (VKList) response.parsedModel;
-                        Log.d("logo",abc.get(0).fields.toString());
 
                         try {
                             User user = new User(abc.get(0).fields);

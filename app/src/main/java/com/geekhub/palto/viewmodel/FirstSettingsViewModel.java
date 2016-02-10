@@ -9,22 +9,26 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.binding.BindableBoolean;
 import com.geekhub.palto.binding.BindableString;
+import com.geekhub.palto.customviews.PolToMultipleChoicePicker;
 import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
 import com.vk.sdk.api.model.VKApiPhoto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
  * Created by duke0808 on 29.01.16.
  */
 public class FirstSettingsViewModel {
+    Firebase myFirebaseRef;
     public BindableString getUserId() {
         return userId;
     }
@@ -50,41 +54,51 @@ public class FirstSettingsViewModel {
     }
 
     FirstSettingsActivity activity;
+    SharedPreferences srefs;
     BindableString userId = new BindableString();
     BindableString imageUrl = new BindableString();
     BindableString nickName = new BindableString();
-    HashMap<String, Boolean> interestMap;
+
 
     public FirstSettingsViewModel(final FirstSettingsActivity activity) {
         this.activity = activity;
-        SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
 
         userId.set(UserAgent.get(activity).getUserId());
-        ArrayList<String> testList = new ArrayList<>();
-        testList.add("Interest 1");
-        testList.add("Auto");
-        testList.add("Auto2");
-        testList.add("Sex");
-        testList.add("Sex2");
-        testList.add("Bowling");
-        testList.add("Bowling2");
-        testList.add("Cats and Dogs");
-        testList.add("Cats and Dogs2");
+
+
+
         activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME", ""));
         Picasso.with(activity).load(srefs.getString("VKUserICON","")).into(activity.binding.smallAvatarIv);
-//        ArrayAdapter<?> adapter =
-//                ArrayAdapter.createFromResource(activity, R.array.animals,android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent(activity,ChatListActivity.class));
+                myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+                pushToFireBase("musik",activity.binding.musikInterestPicker);
+                pushToFireBase("film",activity.binding.filmInterestPicker);
+                pushToFireBase("growth",activity.binding.growthInterestPicker);
+                pushToFireBase("eyes",activity.binding.eyesInterestPicker);
+                pushToFireBase("znakom",activity.binding.znakomInterestPicker);
+
+                activity.startActivity(new Intent(activity, ChatListActivity.class));
+
+
             }
         });
 
-        activity.binding.testInterestPicker.setItems(testList);
+        activity.binding.musikInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.musik));
+        activity.binding.znakomInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.znakom));
+        activity.binding.filmInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.film));
+        activity.binding.growthInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.growth));
+        activity.binding.eyesInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.eyes));
+
     }
 
-
+    private void pushToFireBase(String name, PolToMultipleChoicePicker polToMultipleChoicePicker){
+        myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child(name).removeValue();
+        for(int i = 0;i<polToMultipleChoicePicker.getInterestSet().size();i++){
+            myFirebaseRef.child(srefs.getString("VKUserID", "")).child("interest").child(name).child("" + i).setValue(polToMultipleChoicePicker.getInterestSet().get(i));
+        }
+    }
 
 }
