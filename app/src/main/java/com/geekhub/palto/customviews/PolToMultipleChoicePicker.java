@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geekhub.palto.R;
 
@@ -53,11 +54,12 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     }
 
     private void  initView(final Context context, AttributeSet attrs, final int defStyleAttr, int defStyleRes){
-        setOrientation(VERTICAL);
+        setOrientation(HORIZONTAL);
         mLabelTv = new AppCompatTextView(context);
         mLabelTv.setPadding(5, 5, 5, 5);
         button = new Button(context);
-        button.setPadding(25, 25, 25, 25);
+        button.setPadding(15, 15, 15, 15);
+
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PolToMultipleChoicePicker, defStyleAttr, defStyleRes);
             if (a.hasValue(R.styleable.PolToMultipleChoicePicker_pickerLabel)) {
@@ -90,7 +92,14 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private void setButtobnTitle(String text){
         button.setText(text);
     }
-
+    public void setItemsFromResource (String [] mas){
+        ArrayList <String> items = new ArrayList<>();
+        for(int i = 0; i<mas.length; i++){
+            items.add(mas[i]);
+        }
+        this.items = items;
+        initCharSequences(items);
+    }
     public void setItems(ArrayList<String> items) {
         this.items = items;
         initCharSequences(items);
@@ -112,7 +121,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         return strings;
     }
 
-    private void buildDialog(Context context){
+    private void buildDialog(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(mLabelTv.getText())
                 .setMultiChoiceItems(strings, booleans, new DialogInterface.OnMultiChoiceClickListener() {
@@ -123,6 +132,14 @@ public class PolToMultipleChoicePicker extends LinearLayout {
                 }).setPositiveButton("Готово", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String toast = "";
+                for(int i = 0;i<getInterestSet().size();i++) {
+                    if (toast.equals("")) {
+                        toast =getInterestSet().get(i);
+                    }else{
+                    toast = toast + ", " + getInterestSet().get(i);}
+                }
+                Toast.makeText(context,"Вы выбрали " + toast,Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });
@@ -130,10 +147,11 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         dialog = builder.create();
     }
 
-    public HashSet<String> getInterestSet(){
-        HashSet<String> set = new HashSet<>();
+    public ArrayList<String> getInterestSet(){
+        ArrayList<String> set = new ArrayList<>();
         for (int i=0;i<strings.length;i++){
             if (booleans[i]) set.add(strings[i]);
+
         }
 
         return set;
