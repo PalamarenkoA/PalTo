@@ -5,6 +5,7 @@ import android.location.GpsStatus;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -52,6 +53,7 @@ public class PolToCheckBoxList extends LinearLayout {
                 addView(checkBox);
             }
      }
+
 
     public HashMap<String, Boolean> getStateMapFromCheckBoxes(){
         for (CheckBox c :
