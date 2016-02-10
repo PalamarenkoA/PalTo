@@ -27,7 +27,8 @@
             android:name=".activity.ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.FirstSettingsActivity"/>
+        <activity android:name=".activity.FirstSettingsActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
