@@ -69,7 +69,7 @@ public class FirstSettingsViewModel {
 
 
         activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME", ""));
-        Picasso.with(activity).load(srefs.getString("VKUserICON","")).into(activity.binding.smallAvatarIv);
+        Picasso.with(activity).load(srefs.getString("VKUserICON","")).placeholder(R.drawable.imgpsh_fullsize).into(activity.binding.smallAvatarIv);
         activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

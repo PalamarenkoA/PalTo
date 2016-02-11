@@ -12,4 +12,8 @@
     <color name="orange">#ff6600</color>
     <color name="gray_ccc">#cccccc</color>
     <color name="ads_text_color">#666666</color>
+
+    <color name="backg_blue">#edf4fc</color>
+    <color name="light_blue">#f1f5f8</color>
+    <color name="buttons">#94a2f1</color>
 </resources>
