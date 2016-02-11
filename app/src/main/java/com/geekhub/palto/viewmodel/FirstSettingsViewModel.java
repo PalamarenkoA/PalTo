@@ -68,8 +68,8 @@ public class FirstSettingsViewModel {
 
 
 
-        activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME", ""));
-        Picasso.with(activity).load(srefs.getString("VKUserICON","")).placeholder(R.drawable.imgpsh_fullsize).into(activity.binding.smallAvatarIv);
+        activity.binding.helloTv.setText("Привет, " + srefs.getString("VKUserNAME", "") + "!");
+        Picasso.with(activity).load(srefs.getString("VKUserICON", "")).placeholder(R.drawable.imgpsh_fullsize).into(activity.binding.smallAvatarIv);
         activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,9 +77,12 @@ public class FirstSettingsViewModel {
                 pushToFireBase("musik",activity.binding.musikInterestPicker);
                 pushToFireBase("film",activity.binding.filmInterestPicker);
                 pushToFireBase("growth",activity.binding.growthInterestPicker);
-                pushToFireBase("eyes",activity.binding.eyesInterestPicker);
-                pushToFireBase("znakom",activity.binding.znakomInterestPicker);
-
+                pushToFireBase("eyes", activity.binding.eyesInterestPicker);
+                pushToFireBase("znakom", activity.binding.znakomInterestPicker);
+                myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText());
+                SharedPreferences.Editor edit = PreferenceManager.
+                        getDefaultSharedPreferences(activity.getApplicationContext()).edit();
+                edit.putString("VKUserNICK",activity.binding.editTextNick.getText().toString()).apply();
                 activity.startActivity(new Intent(activity, ChatListActivity.class));
 
 

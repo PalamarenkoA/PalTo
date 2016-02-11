@@ -29,9 +29,9 @@
         android:id="@+id/editText"
         android:layout_alignBottom="@+id/yourIcon"
         android:layout_toRightOf="@+id/myIcon"
-        android:layout_toLeftOf="@+id/yourIcon"
+        android:layout_toLeftOf="@+id/button"
         android:layout_toEndOf="@+id/myIcon"
-        android:layout_toStartOf="@+id/yourIcon"/>
+        android:layout_toStartOf="@+id/button"/>
 
     <ImageView
         android:layout_width="50dp"
@@ -48,6 +48,16 @@
         android:layout_above="@+id/editText"
         android:layout_centerHorizontal="true"
         />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text=">"
+        android:id="@+id/button"
+        android:layout_toLeftOf="@+id/yourIcon"
+        android:layout_alignParentBottom="true"
+
+         />
 
 </RelativeLayout>
     </layout>
