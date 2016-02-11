@@ -8,7 +8,9 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +61,11 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         mLabelTv.setPadding(5, 5, 5, 5);
         button = new Button(context);
         button.setPadding(15, 15, 15, 15);
+
+        LinearLayout.LayoutParams params = new LayoutParams(300, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.RIGHT;
+        params.setMargins(5,5,5,5);
+        button.setLayoutParams(params);
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PolToMultipleChoicePicker, defStyleAttr, defStyleRes);

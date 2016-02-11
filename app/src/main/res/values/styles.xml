@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:buttonStyle">@style/myButtonStyle</item>-->
     </style>
 
     <style name="LightTextLabelStyle">
@@ -68,4 +69,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="myButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:background">@color/buttons</item>
+    </style>
 </resources>
