@@ -9,6 +9,7 @@
     </data>
 
     <LinearLayout
+        android:background="@color/backg_blue"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,21 +29,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
                 <TextView
                     android:id="@+id/hello_tv"
                     android:text="Привет, Иван Иваныч!"
                     android:layout_width="200dp"
+                    android:gravity="center"
+                    android:textSize="18sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_gravity="center"
                     android:id="@+id/small_avatar_iv"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" />
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:elevation="5dp"/>
             </LinearLayout>
 
+            <include layout="@layout/spec_sep"/>
+
             <TextView
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Для того, чтобы начать использовать приложение, Вам следует заполнить небольшую анкету"
@@ -88,7 +96,8 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scrollView" >
+                android:id="@+id/scrollView"
+                android:background="@color/light_blue">
 
 
                 <LinearLayout
