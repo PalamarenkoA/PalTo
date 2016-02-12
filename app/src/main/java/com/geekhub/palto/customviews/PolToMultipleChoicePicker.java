@@ -72,7 +72,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         paramsBt.gravity = Gravity.RIGHT;
         paramsBt.setMargins(5, 5, 5, 5);
         paramsBt.weight=0.1f;
-        button.setBackgroundColor(context.getColor(R.color.buttons));
+        button.setBackgroundColor(context.getResources().getColor(R.color.buttons));
         button.setLayoutParams(paramsBt);
 
         if (attrs != null) {
@@ -112,9 +112,9 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     }
     public void setButtonUsed(boolean isUsed){
         if (isUsed){
-            button.setBackgroundColor(context.getColor(R.color.colorAccent));
+            button.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         } else {
-            button.setBackgroundColor(context.getColor(R.color.buttons));
+            button.setBackgroundColor(context.getResources().getColor(R.color.buttons));
         }
     }
     public void setItemsFromResource (String [] mas){

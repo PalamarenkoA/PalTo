@@ -1,35 +1,44 @@
 package com.geekhub.palto.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
+import android.databinding.DataBindingUtil;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.Query;
 import com.geekhub.palto.R;
-import com.geekhub.palto.object.ItemDialogList;
+import com.geekhub.palto.databinding.DialogListItemBinding;
+import com.geekhub.palto.viewmodel.ItemDialogList;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by andrey on 11.02.16.
  */
 public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
-
+    Activity activity;
 
 
     public ChatListAdapter(Query ref, Activity activity, int layout) {
         super(ref, ItemDialogList.class, layout, activity);
+        this.activity=activity;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        DialogListItemBinding binding = DataBindingUtil.inflate(activity.getLayoutInflater(), R.layout.dialog_list_item, viewGroup, false);
+
+        return super.getView(i, binding.getRoot(), viewGroup);
     }
 
     @Override
     protected void populateView(View v, ItemDialogList model) {
-        ((TextView) v.findViewById(R.id.lastDate)).setText(model.getLastDate());
-        ((TextView) v.findViewById(R.id.lastMessage)).setText(model.getLastMessage());
-        ((TextView) v.findViewById(R.id.nick)).setText(model.getNick());
-        Picasso.with(v.getContext()).load(model.getIconImage()).into( ((ImageView)v.findViewById(R.id.iconImage)));
-
-
+        DialogListItemBinding binding = DataBindingUtil.getBinding(v);
+        binding.setModel(model);
+        CircleImageView iconImage = binding.iconImage;
+        Picasso.with(v.getContext()).load(model.getIconImage()).into(iconImage);
     }
 }

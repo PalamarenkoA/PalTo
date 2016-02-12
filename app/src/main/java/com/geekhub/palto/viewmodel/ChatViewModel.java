@@ -3,14 +3,14 @@ package com.geekhub.palto.viewmodel;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ListView;
 
 import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
-import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.adapter.ChatListAdapter;
 import com.geekhub.palto.adapter.DialogListAdapter;
-import com.geekhub.palto.object.ItemDialogList;
+import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,11 +22,14 @@ public class ChatViewModel {
     ChatActivity activity;
     SharedPreferences srefs;
     Firebase myFirebaseRef;
+    private final ChatListAdapter chatListAdapter;
+
     public ChatViewModel ( final ChatActivity activity){
         this.activity = activity;
+        Firebase.setAndroidContext(activity.getApplicationContext());
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
         Firebase chatFirebase = myFirebaseRef.child("Chat");
-        ChatListAdapter chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
+        chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
         final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList);
@@ -34,8 +37,13 @@ public class ChatViewModel {
             @Override
             public void onClick(View v) {
                 if(activity.binding.editText.length()>0){
-                    ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON","null"),srefs.getString("VKUserNICK","nick"),"2323",activity.binding.editText.getText().toString());
+                    ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON","null"),srefs.getString("VKUserNICK","nick"),
+                            "",activity.binding.editText.getText().toString(),
+                            UserAgent.get().getUserId());
                     myFirebaseRef.child("Chat").push().setValue(itemDialogList);
+                    activity.binding.editText.setText("");
+                    ListView chatList = activity.binding.chatList;
+                    ((ListView) chatList).smoothScrollToPosition(chatList.getCount()+1);
                 }
             }
         });
