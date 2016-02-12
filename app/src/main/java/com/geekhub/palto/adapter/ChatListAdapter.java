@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.firebase.client.Query;
 import com.geekhub.palto.R;
 import com.geekhub.palto.databinding.DialogListItemBinding;
+import com.geekhub.palto.useragent.UserAgent;
 import com.geekhub.palto.viewmodel.ItemDialogList;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +39,18 @@ public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
     protected void populateView(View v, ItemDialogList model) {
         DialogListItemBinding binding = DataBindingUtil.getBinding(v);
         binding.setModel(model);
+
+        boolean isYoursMsg = UserAgent.get().getUserId().equals(model.id);
         CircleImageView iconImage = binding.iconImage;
-        Picasso.with(v.getContext()).load(model.getIconImage()).into(iconImage);
+        if (!isYoursMsg) {
+            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
+            iconImage.setVisibility(View.GONE);
+        } else {
+            iconImage.setImageResource(R.drawable.you);
+            iconImage.setAlpha(0.3f);
+//            CircleImageView yourIconImage = binding.yourIconImage;
+//            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(yourIconImage);
+//            yourIconImage.setVisibility(View.VISIBLE);
+        }
     }
 }
