@@ -64,7 +64,7 @@ public class FirstSettingsViewModel {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
 
-        userId.set(UserAgent.get(activity).getUserId());
+        userId.set(UserAgent.get().getUserId());
 
 
 

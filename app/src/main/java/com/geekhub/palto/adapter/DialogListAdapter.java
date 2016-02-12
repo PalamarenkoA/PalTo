@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geekhub.palto.R;
-import com.geekhub.palto.object.ItemDialogList;
+import com.geekhub.palto.viewmodel.ItemDialogList;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
