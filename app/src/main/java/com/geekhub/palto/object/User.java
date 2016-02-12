@@ -65,12 +65,48 @@ public class User {
        name = jsonObject.getString("first_name");
        lastName = jsonObject.getString("last_name");
        id = jsonObject.getString("id");
-       sex = jsonObject.getInt("sex");
-       bdate = jsonObject.getString("bdate");
-       city = jsonObject.getJSONObject("city").getString("title");
-       cityID = jsonObject.getJSONObject("city").getInt("id");
-       country = jsonObject.getJSONObject("country").getString("title");
-       countryID = jsonObject.getJSONObject("country").getInt("id");
+       try {
+           sex = jsonObject.getInt("sex");
+       }catch (JSONException e){
+           e.printStackTrace();
+
+       }
+       try {
+           bdate = jsonObject.getString("bdate");
+       }catch (JSONException e){
+           e.printStackTrace();
+
+       }
+       try {
+           city = jsonObject.getJSONObject("city").getString("title");
+       }catch (JSONException e){
+           e.printStackTrace();
+
+       }
+       try {
+           cityID = jsonObject.getJSONObject("city").getInt("id");
+       }catch (JSONException e){
+           e.printStackTrace();
+
+       }
+
+       try {
+           country = jsonObject.getJSONObject("country").getString("title");
+       }catch (JSONException e){
+           e.printStackTrace();
+
+       }
+       try {
+           countryID = jsonObject.getJSONObject("country").getInt("id");
+       }catch (JSONException e){
+           e.printStackTrace();
+       }
+
+
+
+
+
+
 
     }
 }
