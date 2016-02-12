@@ -19,16 +19,25 @@ public class UserAgent {
     private String token;
     private String userId;
     private static UserAgent agent;
+    public static Context appContext;
 
     public UserAgent(Context context) {
         this.token= PreferenceManager.getDefaultSharedPreferences(context).getString("VKAccessToken", "");
         this.userId = PreferenceManager.getDefaultSharedPreferences(context).getString("VKUserID", "");
     }
 
-    public static UserAgent get(Context context) {
+    public static UserAgent get() {
         if (agent==null){
-            agent=new UserAgent(context);
+            agent=new UserAgent(appContext);
         }
         return agent;
+    }
+
+    public static Context getAppContext() {
+        return appContext;
+    }
+
+    public static void setAppContext(Context appContext) {
+        UserAgent.appContext = appContext;
     }
 }

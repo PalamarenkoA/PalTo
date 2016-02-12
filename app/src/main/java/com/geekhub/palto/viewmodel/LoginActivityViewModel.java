@@ -17,7 +17,7 @@ public class LoginActivityViewModel {
 
     public LoginActivityViewModel(LogInActivity activity) {
         this.activity = activity;
-        if (UserAgent.get(activity).getToken().length()>0){
+        if (UserAgent.get().getToken().length()>0){
             Intent intent = new Intent(activity, FirstSettingsActivity.class);
             activity.startActivity(intent);
         }
