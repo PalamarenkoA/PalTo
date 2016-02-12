@@ -11,8 +11,10 @@ import android.widget.BaseAdapter;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.geekhub.palto.object.ItemDialogList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
     private List<T> mModels;
     private List<String> mKeys;
     private ChildEventListener mListener;
-
+    ItemDialogList itemDialogList;
 
     /**
      * @param mRef        The Firebase location to watch for data changes. Can also be a slice of a location, using some
@@ -59,7 +61,8 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         mListener = this.mRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-
+                itemDialogList = dataSnapshot.getValue(ItemDialogList.class);
+                Log.d("logos",itemDialogList.getIconImage());
                 T model = dataSnapshot.getValue(FirebaseListAdapter.this.mModelClass);
                 String key = dataSnapshot.getKey();
 

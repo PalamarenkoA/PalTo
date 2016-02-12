@@ -70,7 +70,6 @@ public class LogInActivity extends AppCompatActivity {
 
                         try {
                             User user = new User(abc.get(0).fields);
-                            Log.d("logo",user.getBdate());
                             edit.putString("VKUserICON",user.getPhoto_200()).apply();
                             edit.putString("VKUserNAME",user.getName()+" "+user.getLastName()).apply();
                             SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
