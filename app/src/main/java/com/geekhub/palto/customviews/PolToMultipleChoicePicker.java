@@ -19,12 +19,10 @@ import android.widget.Toast;
 import com.geekhub.palto.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/**
- * Created by root on 10.02.16.
- */
 public class PolToMultipleChoicePicker extends LinearLayout {
 
     private TextView mLabelTv;
@@ -33,6 +31,8 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private String[] strings;
     private boolean[] booleans;
     private AlertDialog dialog;
+    private Context context;
+    private boolean isSingleChoise;
 
     public PolToMultipleChoicePicker(Context context) {
         super(context);
@@ -57,15 +57,23 @@ public class PolToMultipleChoicePicker extends LinearLayout {
 
     private void  initView(final Context context, AttributeSet attrs, final int defStyleAttr, int defStyleRes){
         setOrientation(HORIZONTAL);
-        mLabelTv = new AppCompatTextView(context);
+        this.context = context;
+        mLabelTv = new AppCompatTextView(this.context);
         mLabelTv.setPadding(5, 5, 5, 5);
+        LinearLayout.LayoutParams paramsLabel = new LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsLabel.weight=1.1f;
+        paramsLabel.gravity=Gravity.CENTER;
+        mLabelTv.setLayoutParams(paramsLabel);
+        mLabelTv.setTextSize(20);
         button = new Button(context);
         button.setPadding(15, 15, 15, 15);
 
-        LinearLayout.LayoutParams params = new LayoutParams(300, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.RIGHT;
-        params.setMargins(5,5,5,5);
-        button.setLayoutParams(params);
+        LinearLayout.LayoutParams paramsBt = new LayoutParams(300, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsBt.gravity = Gravity.RIGHT;
+        paramsBt.setMargins(5, 5, 5, 5);
+        paramsBt.weight=0.1f;
+        button.setBackgroundColor(context.getColor(R.color.buttons));
+        button.setLayoutParams(paramsBt);
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PolToMultipleChoicePicker, defStyleAttr, defStyleRes);
@@ -77,8 +85,9 @@ public class PolToMultipleChoicePicker extends LinearLayout {
             if (a.hasValue(R.styleable.PolToMultipleChoicePicker_buttonTitle)) {
                 setButtobnTitle(a.getString(R.styleable.PolToMultipleChoicePicker_buttonTitle));
             } else {
-                setLabelText("Выюрать");
+                setButtobnTitle("Выбрать");
             }
+            isSingleChoise = a.getBoolean(R.styleable.PolToMultipleChoicePicker_isSingleChoisePicker, false);
         }
         button.setOnClickListener(new OnClickListener() {
             @Override
@@ -88,6 +97,8 @@ public class PolToMultipleChoicePicker extends LinearLayout {
             }
         });
 
+        LinearLayout.LayoutParams mainParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setLayoutParams(mainParams);
         addView(mLabelTv);
         addView(button);
     }
@@ -99,11 +110,16 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private void setButtobnTitle(String text){
         button.setText(text);
     }
+    public void setButtonUsed(boolean isUsed){
+        if (isUsed){
+            button.setBackgroundColor(context.getColor(R.color.colorAccent));
+        } else {
+            button.setBackgroundColor(context.getColor(R.color.buttons));
+        }
+    }
     public void setItemsFromResource (String [] mas){
         ArrayList <String> items = new ArrayList<>();
-        for(int i = 0; i<mas.length; i++){
-            items.add(mas[i]);
-        }
+        Collections.addAll(items, mas);
         this.items = items;
         initCharSequences(items);
     }
@@ -119,37 +135,68 @@ public class PolToMultipleChoicePicker extends LinearLayout {
             strings[i]=list.get(i);
 
             //TODO: Fill 'if' restore from saved instance
-            if (true){
-                booleans[i]=false;
-            } else {
-                booleans[i]=true;
-            }
+            booleans[i]=false;
         }
         return strings;
     }
 
     private void buildDialog(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(mLabelTv.getText())
-                .setMultiChoiceItems(strings, booleans, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        booleans[which] = isChecked;
+        if (!isSingleChoise) {
+            builder.setTitle(mLabelTv.getText())
+                    .setMultiChoiceItems(strings, booleans, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            booleans[which] = isChecked;
+                        }
+                    }).setPositiveButton("Готово", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String toast = "";
+                    int size = getInterestSet().size();
+                    for(int i = 0;i< size;i++) {
+                        if (toast.equals("")) {
+                            toast =getInterestSet().get(i);
+                        }else{
+                        toast = toast + ", " + getInterestSet().get(i);}
                     }
-                }).setPositiveButton("Готово", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String toast = "";
-                for(int i = 0;i<getInterestSet().size();i++) {
-                    if (toast.equals("")) {
-                        toast =getInterestSet().get(i);
-                    }else{
-                    toast = toast + ", " + getInterestSet().get(i);}
+                    Toast.makeText(context,"Вы выбрали " + toast,Toast.LENGTH_LONG).show();
+                    if (size >0){
+                        setButtobnTitle(String.format("Выбрано: %d", size));
+                        setButtonUsed(true);
+                    } else {
+                        setButtobnTitle("Выбрать");
+                        setButtonUsed(false);
+                    }
+                    dialog.dismiss();
                 }
-                Toast.makeText(context,"Вы выбрали " + toast,Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
+            });
+        } else {
+            builder.setTitle(mLabelTv.getText()).setSingleChoiceItems(strings, 0, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (boolean b :
+                            booleans) {
+                        b = false;
+                    }
+                    booleans[which] = true;
+                    setButtonUsed(true);
+                    setButtobnTitle(strings[which]);
+                    dialog.dismiss();
+                }
+            }).setNegativeButton("Не указывать", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (boolean b :
+                            booleans) {
+                        b = false;
+                    }
+                    setButtobnTitle("Не указано");
+                    setButtonUsed(false);
+                    dialog.dismiss();
+                }
+            });
+        }
 
         dialog = builder.create();
     }

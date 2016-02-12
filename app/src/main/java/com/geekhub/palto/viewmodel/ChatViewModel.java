@@ -36,14 +36,9 @@ public class ChatViewModel {
                 if(activity.binding.editText.length()>0){
                     ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON","null"),srefs.getString("VKUserNICK","nick"),"2323",activity.binding.editText.getText().toString());
                     myFirebaseRef.child("Chat").push().setValue(itemDialogList);
-
                 }
             }
         });
-
-
-
-
 
         activity.binding.chatList.setAdapter(chatListAdapter);
         Picasso.with(activity).load("http://cs623630.vk.me/v623630022/44bd6/wEJMXO7t_ic.jpg").into(activity.binding.myIcon);
