@@ -35,7 +35,6 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
         String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
         for(int i = 0;i<fingerprints.length;i++){

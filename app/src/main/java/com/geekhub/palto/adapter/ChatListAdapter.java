@@ -44,10 +44,9 @@ public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
         CircleImageView iconImage = binding.iconImage;
         if (!isYoursMsg) {
             Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
-            iconImage.setVisibility(View.GONE);
+
         } else {
-            iconImage.setImageResource(R.drawable.you);
-            iconImage.setAlpha(0.3f);
+            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
 //            CircleImageView yourIconImage = binding.yourIconImage;
 //            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(yourIconImage);
 //            yourIconImage.setVisibility(View.VISIBLE);

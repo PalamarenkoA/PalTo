@@ -31,8 +31,7 @@ public class ChatViewModel {
         Firebase chatFirebase = myFirebaseRef.child("Chat");
         chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-        final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
-        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList);
+
         activity.binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
