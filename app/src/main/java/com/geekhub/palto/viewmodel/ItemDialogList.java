@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.geekhub.palto.useragent.UserAgent;
 
 import org.json.JSONException;
@@ -65,7 +66,6 @@ public class ItemDialogList {
     public String id;
 
 
-
     public ItemDialogList(String iconImage,String nick, String lastDate, String lastMessage, String id){
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -78,4 +78,5 @@ public class ItemDialogList {
         this.lastMessage = lastMessage;
         this.id=id;
     }
+
 }
