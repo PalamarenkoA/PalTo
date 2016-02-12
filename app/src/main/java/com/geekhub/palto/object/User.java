@@ -100,7 +100,6 @@ public class User {
            countryID = jsonObject.getJSONObject("country").getInt("id");
        }catch (JSONException e){
            e.printStackTrace();
-
        }
 
 
