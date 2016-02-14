@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
+import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
 
 import java.util.ArrayList;
@@ -29,6 +30,12 @@ public class ChatListViewModel {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 activity.startActivity(new Intent(activity, ChatActivity.class));
+            }
+        });
+        activity.binding.addNewChatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.startActivity(new Intent(activity, SearchNewChatActivity.class));
             }
         });
 
