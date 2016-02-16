@@ -15,7 +15,7 @@
         <item>  Чёрный</item>
         <item>  Жёлтый</item>
         <item>  Фиолетовый</item>
-</string-array>
+    </string-array>
     <string-array name="growth">
         <item> до 150</item>
         <item>  от 150 до 165</item>
@@ -23,7 +23,7 @@
         <item> от 175 до 185</item>
         <item> от 185 до 200</item>
         <item>  от 200</item>
-</string-array>
+    </string-array>
 
     <string-array name="znakom">
         <item>Дружба</item>
@@ -32,8 +32,7 @@
         <item>Отношения</item>
         <item>Семья</item>
         <item>Секс</item>
-</string-array>
-
+    </string-array>
 
 
     <string-array name="film">
@@ -68,7 +67,7 @@
         <item> Фэнтези</item>
         <item>  Эротика</item>
         <item>  Юмор</item>
-</string-array>
+    </string-array>
     <string-array name="musik">
 
         <item> Альтернатива</item>
@@ -129,4 +128,5 @@
 
     </string-array>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="title_activity_search_new_chat">SearchNewChat</string>
 </resources>

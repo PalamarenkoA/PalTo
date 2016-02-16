@@ -26,9 +26,14 @@
         <activity
             android:name=".activity.ChatActivity"
             android:label="@string/title_activity_chat"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.FirstSettingsActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.FirstSettingsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.SearchNewChatActivity"
+            android:label="@string/title_activity_search_new_chat"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

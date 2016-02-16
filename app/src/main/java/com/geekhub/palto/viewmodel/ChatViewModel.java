@@ -9,11 +9,9 @@ import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.adapter.ChatListAdapter;
-import com.geekhub.palto.adapter.DialogListAdapter;
+import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by andrey on 09.02.16.
@@ -31,8 +29,7 @@ public class ChatViewModel {
         Firebase chatFirebase = myFirebaseRef.child("Chat");
         chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-        final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
-        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList);
+
         activity.binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,7 +13,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.geekhub.palto.viewmodel.ItemDialogList;
+import com.geekhub.palto.object.ItemDialogList;
 
 import java.util.ArrayList;
 import java.util.List;

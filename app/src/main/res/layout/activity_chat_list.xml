@@ -18,6 +18,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dialogList"
+            android:layout_above="@+id/addNewChatButton"
+          />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:id="@+id/addNewChatButton"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 </layout>

@@ -76,9 +76,10 @@ public class FirstSettingsViewModel {
                 myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
                 pushToFireBase("musik",activity.binding.musikInterestPicker);
                 pushToFireBase("film",activity.binding.filmInterestPicker);
+                pushToFireBase("znakom", activity.binding.znakomInterestPicker);
                 pushToFireBase("growth",activity.binding.growthInterestPicker);
                 pushToFireBase("eyes", activity.binding.eyesInterestPicker);
-                pushToFireBase("znakom", activity.binding.znakomInterestPicker);
+
                 myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText().toString());
                 SharedPreferences.Editor edit = PreferenceManager.
                         getDefaultSharedPreferences(activity.getApplicationContext()).edit();
@@ -100,7 +101,7 @@ public class FirstSettingsViewModel {
     private void pushToFireBase(String name, PolToMultipleChoicePicker polToMultipleChoicePicker){
         myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child(name).removeValue();
         for(int i = 0;i<polToMultipleChoicePicker.getInterestSet().size();i++){
-            myFirebaseRef.child(srefs.getString("VKUserID", "")).child("interest").child(name).child("" + i).setValue(polToMultipleChoicePicker.getInterestSet().get(i));
+            myFirebaseRef.child(srefs.getString("VKUserID", "")).child("interest").child(name).child(name + i).setValue(polToMultipleChoicePicker.getInterestSet().get(i));
         }
     }
 
