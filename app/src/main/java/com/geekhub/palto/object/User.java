@@ -65,42 +65,25 @@ public class User {
        name = jsonObject.getString("first_name");
        lastName = jsonObject.getString("last_name");
        id = jsonObject.getString("id");
-       try {
+       if(jsonObject.has("sex")){
            sex = jsonObject.getInt("sex");
-       }catch (JSONException e){
-           e.printStackTrace();
-
        }
-       try {
+
+       if(jsonObject.has("sbdate")){
            bdate = jsonObject.getString("bdate");
-       }catch (JSONException e){
-           e.printStackTrace();
-
        }
-       try {
+       if(jsonObject.has("city")){
            city = jsonObject.getJSONObject("city").getString("title");
-       }catch (JSONException e){
-           e.printStackTrace();
-
-       }
-       try {
            cityID = jsonObject.getJSONObject("city").getInt("id");
-       }catch (JSONException e){
-           e.printStackTrace();
-
        }
 
-       try {
-           country = jsonObject.getJSONObject("country").getString("title");
-       }catch (JSONException e){
-           e.printStackTrace();
 
-       }
-       try {
-           countryID = jsonObject.getJSONObject("country").getInt("id");
-       }catch (JSONException e){
-           e.printStackTrace();
-       }
+        if(jsonObject.has("country")){
+            country = jsonObject.getJSONObject("country").getString("title");
+            countryID = jsonObject.getJSONObject("country").getInt("id");
+        }
+
+
 
 
 

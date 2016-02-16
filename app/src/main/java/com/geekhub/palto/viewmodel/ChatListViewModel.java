@@ -8,6 +8,7 @@ import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
+import com.geekhub.palto.object.ItemDialogList;
 
 import java.util.ArrayList;
 

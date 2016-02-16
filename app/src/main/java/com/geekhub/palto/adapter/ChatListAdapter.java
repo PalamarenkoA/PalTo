@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.firebase.client.Query;
 import com.geekhub.palto.R;
 import com.geekhub.palto.databinding.DialogListItemBinding;
 import com.geekhub.palto.useragent.UserAgent;
-import com.geekhub.palto.viewmodel.ItemDialogList;
+import com.geekhub.palto.object.ItemDialogList;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;

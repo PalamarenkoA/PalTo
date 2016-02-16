@@ -9,11 +9,9 @@ import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.adapter.ChatListAdapter;
-import com.geekhub.palto.adapter.DialogListAdapter;
+import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by andrey on 09.02.16.
