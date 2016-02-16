@@ -33,6 +33,9 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private AlertDialog dialog;
     private Context context;
     private boolean isSingleChoise;
+    private String myMessage;
+    private Button dialogButton;
+    private int maxItems;
 
     public PolToMultipleChoicePicker(Context context) {
         super(context);
@@ -88,12 +91,24 @@ public class PolToMultipleChoicePicker extends LinearLayout {
                 setButtobnTitle("Выбрать");
             }
             isSingleChoise = a.getBoolean(R.styleable.PolToMultipleChoicePicker_isSingleChoisePicker, false);
+            if (a.hasValue(R.styleable.PolToMultipleChoicePicker_my_message)){
+                myMessage = a.getString(R.styleable.PolToMultipleChoicePicker_my_message);
+            }
+            maxItems = a.getInt(R.styleable.PolToMultipleChoicePicker_maxItems, 5);
         }
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 buildDialog(context);
                 dialog.show();
+                dialogButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                if (dialogButton!=null) {
+                    if (getInterestSet().size() > maxItems) {
+                        dialogButton.setEnabled(false);
+                    } else {
+                        dialogButton.setEnabled(true);
+                    }
+                }
             }
         });
 
@@ -144,10 +159,16 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (!isSingleChoise) {
             builder.setTitle(mLabelTv.getText())
+                    .setCancelable(false)
                     .setMultiChoiceItems(strings, booleans, new DialogInterface.OnMultiChoiceClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                             booleans[which] = isChecked;
+                            if (getInterestSet().size() > maxItems) {
+                                dialogButton.setEnabled(false);
+                            } else {
+                                dialogButton.setEnabled(true);
+                            }
                         }
                     }).setPositiveButton("Готово", new DialogInterface.OnClickListener() {
                 @Override
@@ -171,20 +192,36 @@ public class PolToMultipleChoicePicker extends LinearLayout {
                     dialog.dismiss();
                 }
             });
-        } else {
-            builder.setTitle(mLabelTv.getText()).setSingleChoiceItems(strings, 0, new DialogInterface.OnClickListener() {
+            if (myMessage!=null) {
+                builder.setTitle(myMessage);
+            }
+            builder.setNegativeButton("Не указывать", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     for (boolean b :
                             booleans) {
                         b = false;
                     }
-                    booleans[which] = true;
-                    setButtonUsed(true);
-                    setButtobnTitle(strings[which]);
+                    setButtobnTitle("Не указано");
+                    setButtonUsed(false);
                     dialog.dismiss();
                 }
-            }).setNegativeButton("Не указывать", new DialogInterface.OnClickListener() {
+            });
+        } else {
+            builder.setTitle(mLabelTv.getText()).
+                    setSingleChoiceItems(strings, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            for (boolean b :
+                                    booleans) {
+                                b = false;
+                            }
+                            booleans[which] = true;
+                            setButtonUsed(true);
+                            setButtobnTitle(strings[which]);
+                            dialog.dismiss();
+                        }
+                    }).setNegativeButton("Не указывать", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     for (boolean b :
