@@ -117,19 +117,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:pickerLabel="Любимая музыка"
-                        app:buttonTitle="Выбрать"/>
+                        app:buttonTitle="Выбрать"
+                        app:my_message="Не больше 5 вариантов"/>
                     <com.geekhub.palto.customviews.PolToMultipleChoicePicker
                         android:id="@+id/film_interest_picker"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:pickerLabel="Любимые фильмы"
-                        app:buttonTitle="Выбрать"/>
+                        app:buttonTitle="Выбрать"
+                        app:my_message="Не больше 5 вариантов"/>
                     <com.geekhub.palto.customviews.PolToMultipleChoicePicker
                         android:id="@+id/znakom_interest_picker"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:pickerLabel="Цель знакомства"
-                        app:buttonTitle="Выбрать"/>
+                        app:buttonTitle="Выбрать"
+                        app:my_message="Не больше 3 вариантов"
+                        app:maxItems="3"/>
                     <com.geekhub.palto.customviews.PolToMultipleChoicePicker
                         android:id="@+id/growth_interest_picker"
                         android:layout_width="match_parent"
