@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.firebase.client.Query;
 import com.geekhub.palto.R;
 import com.geekhub.palto.databinding.DialogListItemBinding;
 import com.geekhub.palto.useragent.UserAgent;
-import com.geekhub.palto.viewmodel.ItemDialogList;
+import com.geekhub.palto.object.ItemDialogList;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,10 +42,9 @@ public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
         CircleImageView iconImage = binding.iconImage;
         if (!isYoursMsg) {
             Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
-            iconImage.setVisibility(View.GONE);
+
         } else {
-            iconImage.setImageResource(R.drawable.you);
-            iconImage.setAlpha(0.3f);
+            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
 //            CircleImageView yourIconImage = binding.yourIconImage;
 //            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(yourIconImage);
 //            yourIconImage.setVisibility(View.VISIBLE);

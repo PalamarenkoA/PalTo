@@ -1,4 +1,4 @@
-package com.geekhub.palto.viewmodel;
+package com.geekhub.palto.object;
 
 import android.util.Log;
 import android.widget.ImageView;

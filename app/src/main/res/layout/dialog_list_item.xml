@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="model"
-            type="com.geekhub.palto.viewmodel.ItemDialogList" />
+            type="com.geekhub.palto.object.ItemDialogList" />
     </data>
 
 <LinearLayout

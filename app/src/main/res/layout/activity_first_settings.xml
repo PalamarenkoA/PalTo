@@ -137,6 +137,7 @@
                         app:pickerLabel="Ваш рост"
                         app:buttonTitle="Выбрать"
                         app:isSingleChoisePicker="true"/>
+
                     <com.geekhub.palto.customviews.PolToMultipleChoicePicker
                         android:id="@+id/eyes_interest_picker"
                         android:layout_width="match_parent"
