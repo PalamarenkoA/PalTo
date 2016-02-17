@@ -1,5 +1,7 @@
 package com.geekhub.palto.viewmodel;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
@@ -27,12 +29,15 @@ public class SearchNewChatViewModel {
 
     SearchNewChatActivity activity;
     private Firebase myFirebaseRef;
+    private Firebase myFirebaseChat;
     private ChildEventListener mListener;
     ArrayList<UserForSearch> list;
-    Transaction.Handler h;
+    SharedPreferences srefs;
     public SearchNewChatViewModel (SearchNewChatActivity activity){
+        srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         this.activity = activity;
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+        myFirebaseChat = new Firebase("https://paltochat.firebaseio.com/");
         list = new ArrayList<>();
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -47,12 +52,11 @@ public class SearchNewChatViewModel {
                 UserForSearch userForSearch1 = new UserForSearch();
                 userForSearch1.setCityID(2642);
                 userForSearch1.setCountryID(2);
-                ArrayList<UserForSearch> list2 = searchHelper.init(list,userForSearch1);
+                UserForSearch choice = searchHelper.init(list,userForSearch1);
 
-
-                for (UserForSearch userForSearch : list2){
-                    Log.d("logos", String.valueOf(userForSearch.getPoints()));
-                }
+                Log.d("logos", choice.getName());
+                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID","null")).push().setValue("Hello");
+                myFirebaseChat.child(srefs.getString("VKUserID","null")).child(choice.getId()).push().setValue("Hello");
             }
 
             @Override
