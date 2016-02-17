@@ -12,11 +12,13 @@ import com.firebase.client.Query;
 import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
+import com.geekhub.palto.SearchHelper;
 import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by andrey on 13.02.16.
@@ -32,12 +34,25 @@ public class SearchNewChatViewModel {
         this.activity = activity;
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
         list = new ArrayList<>();
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
+        myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("logos", dataSnapshot.toString());
-                UserForSearch userForSearch = dataSnapshot.getChildren().iterator().next().getValue(UserForSearch.class);
-                list.add(userForSearch);
+                Iterator <DataSnapshot>iterable = dataSnapshot.getChildren().iterator();
+                dataSnapshot.getChildrenCount();
+                do {
+                    list.add(iterable.next().getValue(UserForSearch.class));
+                }while (iterable.hasNext());
+
+                SearchHelper searchHelper = new SearchHelper();
+                UserForSearch userForSearch1 = new UserForSearch();
+                userForSearch1.setCityID(2642);
+                userForSearch1.setCountryID(2);
+                ArrayList<UserForSearch> list2 = searchHelper.init(list,userForSearch1);
+
+
+                for (UserForSearch userForSearch : list2){
+                    Log.d("logos", String.valueOf(userForSearch.getPoints()));
+                }
             }
 
             @Override
@@ -45,41 +60,6 @@ public class SearchNewChatViewModel {
 
             }
         });
-//        mListener = myFirebaseRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//
-//               Log.d("logos",dataSnapshot.toString());
-//               UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-//                list.add(userForSearch);
-//
-//
-//
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//
-//            }
-//        });
 
 
 
