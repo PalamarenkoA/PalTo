@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -104,5 +105,10 @@ public class SearchNewChatViewModel {
         VKParameters parameters = new VKParameters(map);
         request.addExtraParameters(parameters);
         return request;
+    }
+
+    public void startChat(View view){
+        ArrayList<String> interestSet = activity.binding.cityInterestPicker.getInterestSet();
+        interestSet.size();
     }
 }
