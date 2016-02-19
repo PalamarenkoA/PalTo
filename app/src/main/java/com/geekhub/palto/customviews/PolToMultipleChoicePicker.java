@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geekhub.palto.R;
+import com.geekhub.palto.object.Item;
+import com.geekhub.palto.object.VKCItiesResponse;
+import com.google.gson.Gson;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class PolToMultipleChoicePicker extends LinearLayout {
 
@@ -39,6 +43,8 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private String myMessage;
     private Button dialogButton;
     private int maxItems;
+    private boolean getIds = false;
+    private ArrayList<String> idList;
 
     public PolToMultipleChoicePicker(Context context) {
         super(context);
@@ -146,12 +152,28 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         initCharSequences(items);
     }
 
-    public void setItemsFromVKRequest(VKRequest request){
+    public void setItemsFromVKRequest(final VKRequest request){
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
-                
+                Gson gson = new Gson();
+                VKCItiesResponse vkcItiesResponse = gson.fromJson(String.valueOf(response.json), VKCItiesResponse.class);
+                List<Item> items = vkcItiesResponse.getResponse().getItems();
+                ArrayList<Item> list = new ArrayList<Item>();
+                list.addAll(items);
+
+                idList = new ArrayList<String>();
+                ArrayList<String> nameList = new ArrayList<String>();
+
+                for (Item i :
+                        list) {
+                    idList.add(i.getId().toString());
+                    nameList.add(i.getTitle());
+                }
+
+                setItems(nameList);
+                getIds = true;
             }
 
             @Override
@@ -268,8 +290,19 @@ public class PolToMultipleChoicePicker extends LinearLayout {
 
     public ArrayList<String> getInterestSet(){
         ArrayList<String> set = new ArrayList<>();
+        String[] listToAdd;
+        if (getIds){
+            String[] ss = new String[idList.size()];
+            for (int i=0; i<idList.size();i++){
+                ss[i]=idList.get(i);
+            }
+            listToAdd=ss;
+        } else {
+            listToAdd = strings;
+        }
+
         for (int i=0;i<strings.length;i++){
-            if (booleans[i]) set.add(strings[i]);
+            if (booleans[i]) set.add(listToAdd[i]);
         }
         return set;
     }
