@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geekhub.palto.R;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -143,6 +146,31 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         initCharSequences(items);
     }
 
+    public void setItemsFromVKRequest(VKRequest request){
+        request.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                super.onComplete(response);
+                
+            }
+
+            @Override
+            public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
+                super.attemptFailed(request, attemptNumber, totalAttempts);
+            }
+
+            @Override
+            public void onError(VKError error) {
+                super.onError(error);
+            }
+
+            @Override
+            public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
+                super.onProgress(progressType, bytesLoaded, bytesTotal);
+            }
+        });
+    }
+
     private String[] initCharSequences(ArrayList<String> list){
         strings=new String[list.size()];
         booleans = new boolean[list.size()];
@@ -242,9 +270,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         ArrayList<String> set = new ArrayList<>();
         for (int i=0;i<strings.length;i++){
             if (booleans[i]) set.add(strings[i]);
-
         }
-
         return set;
     }
  }
