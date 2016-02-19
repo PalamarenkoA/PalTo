@@ -1,5 +1,7 @@
 package com.geekhub.palto;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.geekhub.palto.object.UserForSearch;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  */
 public class SearchHelper {
     final int POINTFORCITY = 10;
-
+    SharedPreferences srefs;
     public UserForSearch  init (ArrayList<UserForSearch> list, UserForSearch param){
 
 
@@ -32,9 +34,11 @@ public class SearchHelper {
             }}
    return maxPoint; }
     private UserForSearch choiceUser(ArrayList<UserForSearch> list,int maxPoint){
+        srefs = PreferenceManager.getDefaultSharedPreferences(PaltoApplication.CONTEXT.getApplicationContext());
         ArrayList<UserForSearch> choices = new ArrayList<>();
         for (UserForSearch userForSearch : list){
-            if(userForSearch.getPoints() == maxPoint){
+            if(userForSearch.getPoints() == maxPoint && !userForSearch.getId()
+                    .equals(srefs.getString("VKUserID", "")) ){
                 choices.add(userForSearch);
 
             }}
