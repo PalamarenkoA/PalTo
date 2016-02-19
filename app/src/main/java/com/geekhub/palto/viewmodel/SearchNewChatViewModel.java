@@ -16,6 +16,7 @@ import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
 import com.geekhub.palto.SearchHelper;
 import com.geekhub.palto.activity.SearchNewChatActivity;
+import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
 
@@ -55,8 +56,10 @@ public class SearchNewChatViewModel {
                 UserForSearch choice = searchHelper.init(list,userForSearch1);
 
                 Log.d("logos", choice.getName());
-                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID","null")).push().setValue("Hello");
-                myFirebaseChat.child(srefs.getString("VKUserID","null")).child(choice.getId()).push().setValue("Hello");
+                ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON","null"),
+                        srefs.getString("VKUserNICK","null"),"Привет","");
+                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID","null")).push().setValue(firstMes);
+                myFirebaseChat.child(srefs.getString("VKUserID","null")).child(choice.getId()).push().setValue(firstMes);
             }
 
             @Override
