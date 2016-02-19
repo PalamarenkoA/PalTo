@@ -2,6 +2,7 @@ package com.geekhub.palto.viewmodel;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.firebase.client.AuthData;
@@ -19,8 +20,17 @@ import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.httpClient.VKAbstractOperation;
+import com.vk.sdk.api.methods.VKApiBase;
+import com.vk.sdk.api.model.VKApiPhotoAlbum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -43,23 +53,23 @@ public class SearchNewChatViewModel {
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterator <DataSnapshot>iterable = dataSnapshot.getChildren().iterator();
+                Iterator<DataSnapshot> iterable = dataSnapshot.getChildren().iterator();
                 dataSnapshot.getChildrenCount();
                 do {
                     list.add(iterable.next().getValue(UserForSearch.class));
-                }while (iterable.hasNext());
+                } while (iterable.hasNext());
 
                 SearchHelper searchHelper = new SearchHelper();
                 UserForSearch userForSearch1 = new UserForSearch();
                 userForSearch1.setCityID(2642);
                 userForSearch1.setCountryID(2);
-                UserForSearch choice = searchHelper.init(list,userForSearch1);
+                UserForSearch choice = searchHelper.init(list, userForSearch1);
 
                 Log.d("logos", choice.getName());
-                ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON","null"),
-                        srefs.getString("VKUserNICK","null"),"Привет","");
-                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID","null")).push().setValue(firstMes);
-                myFirebaseChat.child(srefs.getString("VKUserID","null")).child(choice.getId()).push().setValue(firstMes);
+                ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
+                        srefs.getString("VKUserNICK", "null"), "Привет", "");
+                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
+                myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
             }
 
             @Override
@@ -70,11 +80,29 @@ public class SearchNewChatViewModel {
 
 
 
-        activity.binding.musikInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.musik));
-        activity.binding.znakomInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.znakom));
-        activity.binding.filmInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.film));
-        activity.binding.growthInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.growth));
-        activity.binding.eyesInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.eyes));
-        activity.binding.cityInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.eyes));
+        activity.binding.musikInterestPicker.setItemsFromResource(activity.getResources()
+                .getStringArray(R.array.musik));
+        activity.binding.znakomInterestPicker.setItemsFromResource(activity.getResources()
+                .getStringArray(R.array.znakom));
+        activity.binding.filmInterestPicker.setItemsFromResource(activity.getResources()
+                .getStringArray(R.array.film));
+        activity.binding.growthInterestPicker.setItemsFromResource(activity.getResources()
+                .getStringArray(R.array.growth));
+        activity.binding.eyesInterestPicker.setItemsFromResource(activity.getResources()
+                .getStringArray(R.array.eyes));
+
+        VKRequest request = getVkRequestCities();
+        activity.binding.cityInterestPicker.setItemsFromVKRequest(request);
+    }
+
+    @NonNull
+    private VKRequest getVkRequestCities() {
+        VKRequest request = new VKRequest("database.getCities");
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("country_id", "2");
+        map.put("need_all", "0");
+        VKParameters parameters = new VKParameters(map);
+        request.addExtraParameters(parameters);
+        return request;
     }
 }
