@@ -67,8 +67,10 @@ public class FirstSettingsViewModel {
                 pushToFireBase("musik",activity.binding.musikInterestPicker);
                 pushToFireBase("film",activity.binding.filmInterestPicker);
                 pushToFireBase("znakom", activity.binding.znakomInterestPicker);
-                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("growth").setValue(activity.binding.growthInterestPicker.getInterestSet().get(0));
-                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("eyes").setValue(activity.binding.eyesInterestPicker.getInterestSet().get(0));
+                if(!activity.binding.growthInterestPicker.getInterestSet().isEmpty()){
+                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("growth").setValue(activity.binding.growthInterestPicker.getInterestSet().get(0));}
+                if(!activity.binding.eyesInterestPicker.getInterestSet().isEmpty()){
+                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("eyes").setValue(activity.binding.eyesInterestPicker.getInterestSet().get(0));}
                 myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText().toString());
                 SharedPreferences.Editor edit = PreferenceManager.
                         getDefaultSharedPreferences(activity.getApplicationContext()).edit();
