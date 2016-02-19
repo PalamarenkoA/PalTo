@@ -22,10 +22,7 @@ public class ItemDialogList {
     private ItemDialogList(){
 
     }
-    private ItemDialogList(String str){
 
-        Log.d("logo",str);
-    }
     public String getIconImage() {
         return iconImage;
     }
@@ -66,7 +63,7 @@ public class ItemDialogList {
     public String id;
 
 
-    public ItemDialogList(String iconImage,String nick, String lastDate, String lastMessage, String id){
+    public ItemDialogList(String iconImage,String nick, String lastMessage, String id){
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
