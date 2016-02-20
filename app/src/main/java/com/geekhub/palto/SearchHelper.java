@@ -8,23 +8,20 @@ import com.geekhub.palto.object.UserForSearch;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by andrey on 17.02.16.
  */
 public class SearchHelper {
     final int POINTFORCITY = 10;
     SharedPreferences srefs;
-    public UserForSearch  init (ArrayList<UserForSearch> list, UserForSearch param){
+    public UserForSearch  init (ArrayList<UserForSearch> list, UserForSearch param,ArrayList<String> users){
 
 
         list = pointAdd(list,param);
-
-
-
-
         int maxPoint = fiendMaxPoint(list);
 
-       return choiceUser(list,maxPoint);}
+       return choiceUser(list,maxPoint,users);}
 
     private int fiendMaxPoint(ArrayList<UserForSearch> list){
         int maxPoint = 0;
@@ -33,18 +30,23 @@ public class SearchHelper {
                 maxPoint = userForSearch.getPoints();
             }}
    return maxPoint; }
-    private UserForSearch choiceUser(ArrayList<UserForSearch> list,int maxPoint){
-        srefs = PreferenceManager.getDefaultSharedPreferences(PaltoApplication.CONTEXT.getApplicationContext());
+    private UserForSearch choiceUser(ArrayList<UserForSearch> list,int maxPoint, ArrayList<String> users){
+        srefs = PreferenceManager.getDefaultSharedPreferences(PaltoApplication.CONTEXT);
         ArrayList<UserForSearch> choices = new ArrayList<>();
         for (UserForSearch userForSearch : list){
             if(userForSearch.getPoints() == maxPoint && !userForSearch.getId()
                     .equals(srefs.getString("VKUserID", "")) ){
-                choices.add(userForSearch);
+                if(!users.contains(userForSearch.getId())) {
 
+                    choices.add(userForSearch);
+                }
             }}
         int i = (int)(Math.random()*(choices.size()));
         Log.d("logos", String.valueOf(choices.size()));
         Log.d("logos", String.valueOf(i));
+        if(choices.size()== 0){
+            return null;
+        }
         UserForSearch choice = choices.get(i);
 
         return  choice;
