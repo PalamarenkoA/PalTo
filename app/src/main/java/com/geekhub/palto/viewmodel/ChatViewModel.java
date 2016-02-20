@@ -36,9 +36,10 @@ public class ChatViewModel {
             @Override
             public void onClick(View v) {
                 if(activity.binding.editText.length()>0){
-                    ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON","null"),srefs.getString("VKUserNICK","nick")
+                    ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON","null"),
+                            srefs.getString("VKUserNICK","nick")
                             ,activity.binding.editText.getText().toString(),
-                            UserAgent.get().getUserId());
+                            UserAgent.get().getUserId(),"");
                     chatFirebase.push().setValue(itemDialogList);
                     myFirebaseRef.child(srefs.getString("VKUserCHAT","1")).child(srefs.getString("VKUserID","")).push().setValue(itemDialogList);
                     activity.binding.editText.setText("");

@@ -110,7 +110,7 @@ public class SearchNewChatViewModel {
         userForSearch.setCityID(Integer.parseInt(activity.binding.cityInterestPicker.getInterestSet().get(0)));
         UserForSearch choice = searchHelper.init(list, userForSearch);
         ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
-                srefs.getString("VKUserNICK", "null"), "Привет", "");
+                srefs.getString("VKUserNICK", "null"), "Привет",srefs.getString("VKUserID",""),"");
         myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
         myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
 

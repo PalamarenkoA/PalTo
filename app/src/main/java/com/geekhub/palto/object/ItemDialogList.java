@@ -60,15 +60,34 @@ public class ItemDialogList {
     String nick;
     String lastDate;
     String lastMessage;
+
+    public String getReceived() {
+        return received;
+    }
+
+    public void setReceived(String received) {
+        this.received = received;
+    }
+
+    String received;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String id;
 
 
-    public ItemDialogList(String iconImage,String nick, String lastMessage, String id){
+    public ItemDialogList(String iconImage,String nick, String lastMessage, String id, String received){
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String currentTimeStr = dateFormat.format(cal.getTime());
-
+        this.received = received;
         this.iconImage = iconImage;
         this.nick = nick;
         this.lastDate = currentTimeStr;
