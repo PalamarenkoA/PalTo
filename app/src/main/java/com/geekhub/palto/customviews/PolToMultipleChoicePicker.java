@@ -45,6 +45,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private int maxItems;
     private boolean getIds = false;
     private ArrayList<String> idList;
+    private int colorNormalState;
 
     public PolToMultipleChoicePicker(Context context) {
         super(context);
@@ -84,7 +85,8 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         paramsBt.gravity = Gravity.RIGHT;
         paramsBt.setMargins(5, 5, 5, 5);
         paramsBt.weight=0.1f;
-        button.setBackgroundColor(context.getResources().getColor(R.color.buttons));
+        colorNormalState = context.getResources().getColor(R.color.colorPrimary);
+        button.setBackgroundColor(colorNormalState);
         button.setLayoutParams(paramsBt);
 
         if (attrs != null) {
@@ -138,7 +140,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         if (isUsed){
             button.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         } else {
-            button.setBackgroundColor(context.getResources().getColor(R.color.buttons));
+            button.setBackgroundColor(colorNormalState);
         }
     }
     public void setItemsFromResource (String [] mas){
