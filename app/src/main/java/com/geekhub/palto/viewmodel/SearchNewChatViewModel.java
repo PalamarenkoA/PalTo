@@ -4,40 +4,29 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.MutableData;
-import com.firebase.client.Query;
-import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
 import com.geekhub.palto.SearchHelper;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
+import com.geekhub.palto.object.Film;
+import com.geekhub.palto.object.Interest;
 import com.geekhub.palto.object.ItemDialogList;
-import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.httpClient.VKAbstractOperation;
-import com.vk.sdk.api.methods.VKApiBase;
-import com.vk.sdk.api.model.VKApiPhotoAlbum;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import static com.geekhub.palto.object.UserForSearch.*;
 
 /**
  * Created by andrey on 13.02.16.
@@ -62,11 +51,12 @@ public class SearchNewChatViewModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                if(iterator.hasNext()){
                 do {
                     DataSnapshot dataSnapshot1 = iterator.next();
                     users.add(dataSnapshot1.getKey());
                 }while (iterator.hasNext());
-            }
+            }}
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
@@ -127,11 +117,25 @@ public class SearchNewChatViewModel {
 
         SearchHelper searchHelper = new SearchHelper();
         UserForSearch userForSearch = new UserForSearch();
-        userForSearch.setCityID(Integer.parseInt(activity.binding.cityInterestPicker.getInterestSet().get(0)));
-        UserForSearch choice = searchHelper.init(list, userForSearch,users);
+        Interest interest = new Interest();
+        if(activity.binding.cityInterestPicker.getInterestSet().size()>0) {
+            userForSearch.setCityID(Integer.parseInt(activity.binding.cityInterestPicker.getInterestSet().get(0)));
+        }
+        if(activity.binding.growthInterestPicker.getInterestSet().size()>0) {
+           interest.setGrowth(activity.binding.growthInterestPicker.getInterestSet().get(0));
+        }
+        if(activity.binding.eyesInterestPicker.getInterestSet().size()>0) {
+            interest.setEyes(activity.binding.eyesInterestPicker.getInterestSet().get(0));
+        }
+        userForSearch.setInterest(interest);
+        UserForSearch choice = searchHelper.init(list, userForSearch,users,
+                activity.binding.filmInterestPicker.getInterestSet(),
+                activity.binding.musikInterestPicker.getInterestSet(),
+                activity.binding.znakomInterestPicker.getInterestSet()
+                );
         if(choice != null) {
             ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
-                    srefs.getString("VKUserNICK", "null"), "Привет", srefs.getString("VKUserID", ""), "");
+                    srefs.getString("VKUserNICK", "null"), "Привет", srefs.getString("VKUserID", ""), "0");
 
 
             myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
@@ -144,4 +148,5 @@ public class SearchNewChatViewModel {
             Toast.makeText(activity,"Нет ни одного подходящего пользователь",Toast.LENGTH_LONG).show();
         }
     }
+
 }

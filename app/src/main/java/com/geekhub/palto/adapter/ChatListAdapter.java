@@ -1,16 +1,23 @@
 package com.geekhub.palto.adapter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.client.Query;
 import com.geekhub.palto.R;
 import com.geekhub.palto.databinding.DialogListItemBinding;
+import com.geekhub.palto.databinding.MessageLeftBinding;
+import com.geekhub.palto.databinding.MessageRightBinding;
 import com.geekhub.palto.useragent.UserAgent;
 import com.geekhub.palto.object.ItemDialogList;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -19,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
     Activity activity;
-
+    SharedPreferences srefs;
 
     public ChatListAdapter(Query ref, Activity activity, int layout) {
         super(ref, ItemDialogList.class, layout, activity);
@@ -28,26 +35,36 @@ public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        DialogListItemBinding binding = DataBindingUtil.inflate(activity.getLayoutInflater(), R.layout.dialog_list_item, viewGroup, false);
 
-        return super.getView(i, binding.getRoot(), viewGroup);
+        srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        if(srefs.getString("VKUserID","").equals(getList().get(i).getId())){
+            MessageLeftBinding binding = DataBindingUtil.inflate(activity.getLayoutInflater(),
+                    R.layout.message_left, viewGroup, false);
+            return super.getView(i, binding.getRoot(), viewGroup);
+
+        }else{
+            MessageRightBinding binding = DataBindingUtil.inflate(activity.getLayoutInflater(),
+                    R.layout.message_right, viewGroup, false);
+            return super.getView(i, binding.getRoot(), viewGroup);
+        }
+
+
+
+
     }
 
     @Override
     protected void populateView(View v, ItemDialogList model) {
-        DialogListItemBinding binding = DataBindingUtil.getBinding(v);
-        binding.setModel(model);
-
         boolean isYoursMsg = UserAgent.get().getUserId().equals(model.id);
-        CircleImageView iconImage = binding.iconImage;
-        if (!isYoursMsg) {
-            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
-
-        } else {
-            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(iconImage);
-//            CircleImageView yourIconImage = binding.yourIconImage;
-//            Picasso.with(v.getContext()).load(model.getIconImage()).placeholder(R.drawable.imgpsh_fullsize).into(yourIconImage);
-//            yourIconImage.setVisibility(View.VISIBLE);
+        if (isYoursMsg) {
+            MessageLeftBinding binding = DataBindingUtil.getBinding(v);
+            binding.setModel(model);
+        }else{
+            MessageRightBinding binding = DataBindingUtil.getBinding(v);
+            binding.setModel(model);
         }
+
+
+
     }
 }

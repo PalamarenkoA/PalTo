@@ -26,6 +26,7 @@ public class ChatViewModel {
     ChatActivity activity;
     SharedPreferences srefs;
     Firebase myFirebaseRef;
+    Intent intent;
     private final ChatListAdapter chatListAdapter;
 
     public ChatViewModel ( final ChatActivity activity){
@@ -33,7 +34,7 @@ public class ChatViewModel {
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         Firebase.setAndroidContext(activity.getApplicationContext());
         myFirebaseRef = new Firebase("https://paltochat.firebaseio.com/");
-        Intent intent = activity.getIntent();
+        intent = activity.getIntent();
 
         final Firebase chatFirebase = myFirebaseRef.child(srefs.getString("VKUserID","")).child(intent.getStringExtra("FriendID"));
         chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
@@ -46,9 +47,9 @@ public class ChatViewModel {
                     ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON", "null"),
                             srefs.getString("VKUserNICK", "nick")
                             , activity.binding.editText.getText().toString(),
-                            UserAgent.get().getUserId(), "");
+                            UserAgent.get().getUserId(), "0");
                     chatFirebase.push().setValue(itemDialogList);
-                    myFirebaseRef.child(srefs.getString("VKUserCHAT", "1")).child(srefs.getString("VKUserID", "")).push().setValue(itemDialogList);
+                    myFirebaseRef.child(intent.getStringExtra("FriendID")).child(srefs.getString("VKUserID", "")).push().setValue(itemDialogList);
                     activity.binding.editText.setText("");
                     ListView chatList = activity.binding.chatList;
                     ((ListView) chatList).smoothScrollToPosition(chatList.getCount() + 1);

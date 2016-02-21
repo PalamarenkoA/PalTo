@@ -35,6 +35,7 @@ public class LogInActivity extends AppCompatActivity {
     Firebase myFirebaseRef;
     SharedPreferences.Editor edit;
     Context context;
+    public  static boolean authorized = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public class LogInActivity extends AppCompatActivity {
                         getDefaultSharedPreferences(getApplicationContext()).edit();
                 edit.putString("VKAccessToken", res.accessToken).apply();
                 edit.putString("VKUserID", res.userId).apply();
+                authorized=true;
                 Intent serviseIntent = new Intent(context, MessageListener.class);
                 serviseIntent.putExtra("ID",res.userId);
                 context.startService(serviseIntent);

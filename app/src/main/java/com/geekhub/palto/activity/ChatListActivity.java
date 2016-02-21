@@ -1,6 +1,7 @@
 package com.geekhub.palto.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,5 +23,13 @@ public class ChatListActivity extends AppCompatActivity {
                 setContentView(this, R.layout.activity_chat_list);
         model = new ChatListViewModel(this);
         binding.setModel(model);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
