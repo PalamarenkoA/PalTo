@@ -1,6 +1,7 @@
 package com.geekhub.palto.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,11 @@ public class ChatActivity extends AppCompatActivity {
    public ActivityChatBinding binding;
     ChatViewModel model;
     Context context;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,ChatListActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
