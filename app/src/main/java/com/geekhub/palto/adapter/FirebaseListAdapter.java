@@ -39,7 +39,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
     private List<T> mModels;
     private List<String> mKeys;
     private ChildEventListener mListener;
-
+    private ArrayList<T> arrayList;
 
     /**
      * @param mRef        The Firebase location to watch for data changes. Can also be a slice of a location, using some
@@ -56,12 +56,14 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         mInflater = activity.getLayoutInflater();
         mModels = new ArrayList<T>();
         mKeys = new ArrayList<String>();
+        arrayList = new ArrayList<>();
         // Look for all child events. We will then map them to our own internal ArrayList, which backs ListView
         mListener = this.mRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.d("logos",dataSnapshot.toString());
                 T model = dataSnapshot.getValue(FirebaseListAdapter.this.mModelClass);
+                arrayList.add(model);
                 String key = dataSnapshot.getKey();
 
                 // Insert into the correct location, based on previousChildName
@@ -146,7 +148,9 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         mModels.clear();
         mKeys.clear();
     }
+    public ArrayList<T> getList(){
 
+    return arrayList;}
     @Override
     public int getCount() {
         return mModels.size();
