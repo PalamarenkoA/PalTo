@@ -38,7 +38,8 @@ public class MessageListener extends Service {
     public IBinder onBind(Intent intent) {
 
 
-          return null;}
+        return null;
+    }
 
     @Override
     public void onCreate() {
@@ -47,67 +48,71 @@ public class MessageListener extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        final SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(PaltoApplication.CONTEXT);
+        if (LogInActivity.authorized) {
+            final SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(PaltoApplication.CONTEXT);
 
-        context = this;
-        final Firebase myMessageListenerFirebase = new Firebase("https://paltochat.firebaseio.com/")
-                .child(srefs.getString("VKUserID",""));
-       myMessageListenerFirebase.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               ArrayList<ItemDialogList> arrayList = new ArrayList();
-               Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-               if (iterator.hasNext()) {
-                   do {
-                       DataSnapshot dataSnapshot1 = iterator.next();
-                       Iterator<DataSnapshot> iteratorSob = dataSnapshot1.getChildren().iterator();
-                       Firebase firebase = myMessageListenerFirebase.child(dataSnapshot1.getKey());
-                       do {
-                           DataSnapshot dataSnapshot2 = iteratorSob.next();
-                           ItemDialogList itemDialogList = dataSnapshot2.getValue(ItemDialogList.class);
-                           Firebase firebase1 = firebase.child(dataSnapshot2.getKey());
-                           if (!itemDialogList.getId().equals(srefs.getString("VKUserID", ""))) {
-                               if (itemDialogList.getReceived().equals("0")) {
-                                   arrayList.add(itemDialogList);
-                                   itemDialogList.setReceived("1");
-                                   firebase1.setValue(itemDialogList);
+            context = this;
+            final Firebase myMessageListenerFirebase = new Firebase("https://paltochat.firebaseio.com/")
+                    .child(srefs.getString("VKUserID", ""));
+            myMessageListenerFirebase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<ItemDialogList> arrayList = new ArrayList();
+                    Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                    if (iterator.hasNext()) {
+                        do {
+                            DataSnapshot dataSnapshot1 = iterator.next();
+                            Iterator<DataSnapshot> iteratorSob = dataSnapshot1.getChildren().iterator();
+                            Firebase firebase = myMessageListenerFirebase.child(dataSnapshot1.getKey());
+                            do {
+                                DataSnapshot dataSnapshot2 = iteratorSob.next();
+                                ItemDialogList itemDialogList = dataSnapshot2.getValue(ItemDialogList.class);
+                                Firebase firebase1 = firebase.child(dataSnapshot2.getKey());
+                                if (!itemDialogList.getId().equals(srefs.getString("VKUserID", ""))) {
+                                    if (itemDialogList.getReceived().equals("0")) {
+                                        arrayList.add(itemDialogList);
+                                        itemDialogList.setReceived("1");
+                                        firebase1.setValue(itemDialogList);
 
-                               }
-                           }
+                                    }
+                                }
 
-                       } while (iteratorSob.hasNext());
+                            } while (iteratorSob.hasNext());
 
-                   } while (iterator.hasNext());
+                        } while (iterator.hasNext());
 
-               }
-               if (arrayList.size() == 1) {
-                   createOneNotification(context, arrayList.get(0));
-               }
-               if (arrayList.size() > 1) {
-                   ArrayList <String> arrayList1 = new ArrayList<String>();
-                   for (int i = 0;i<arrayList.size();i++){
-                       arrayList1.add(arrayList.get(i).getNick());
-                   }
-                   createSeveralNotification(context,arrayList1);
+                    }
+                    if (arrayList.size() == 1) {
+                        createOneNotification(context, arrayList.get(0));
+                    }
+                    if (arrayList.size() > 1) {
+                        ArrayList<String> arrayList1 = new ArrayList<String>();
+                        for (int i = 0; i < arrayList.size(); i++) {
+                            arrayList1.add(arrayList.get(i).getNick());
+                        }
+                        createSeveralNotification(context, arrayList1);
 
-               }
+                    }
 
-           }
-
-
-           @Override
-           public void onCancelled(FirebaseError firebaseError) {
-
-           }
-       });
+                }
 
 
-        return super.onStartCommand(intent, flags, startId); }
-    private void createOneNotification(Context context, ItemDialogList itemDialogList){
-        Intent intent = new Intent(context,ChatActivity.class);
-        intent.putExtra("FriendID",itemDialogList.getId());
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+        }
+
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void createOneNotification(Context context, ItemDialogList itemDialogList) {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("FriendID", itemDialogList.getId());
         PendingIntent pendingIntentApp = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-       android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.icon)
                 .setContentText(itemDialogList.getLastMessage())
                 .setContentTitle(itemDialogList.getNick())
@@ -117,12 +122,13 @@ public class MessageListener extends Service {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1, builder.build());
     }
-    private void createSeveralNotification(Context context, ArrayList<String> mes){
-        Intent intent = new Intent(context,ChatListActivity.class);
+
+    private void createSeveralNotification(Context context, ArrayList<String> mes) {
+        Intent intent = new Intent(context, ChatListActivity.class);
         String mesSt = "";
-       for (int i = 0;i<mes.size();i++){
-           mesSt = mesSt + ", " + mes.get(i);
-       }
+        for (int i = 0; i < mes.size(); i++) {
+            mesSt = mesSt + ", " + mes.get(i);
+        }
 
         PendingIntent pendingIntentApp = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
