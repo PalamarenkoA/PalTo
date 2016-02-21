@@ -67,7 +67,7 @@ public class MessageListener extends Service {
                            ItemDialogList itemDialogList = dataSnapshot2.getValue(ItemDialogList.class);
                            Firebase firebase1 = firebase.child(dataSnapshot2.getKey());
                            if (!itemDialogList.getId().equals(srefs.getString("VKUserID", ""))) {
-                               if (itemDialogList.getReceived().length() == 0) {
+                               if (itemDialogList.getReceived().equals("0")) {
                                    arrayList.add(itemDialogList);
                                    itemDialogList.setReceived("1");
                                    firebase1.setValue(itemDialogList);
