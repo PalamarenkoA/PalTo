@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.geekhub.palto.R;
 import com.geekhub.palto.object.Item;
 import com.geekhub.palto.object.VKCItiesResponse;
+
 import com.google.gson.Gson;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
@@ -159,6 +160,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
+
                 Gson gson = new Gson();
                 VKCItiesResponse vkcItiesResponse = gson.fromJson(String.valueOf(response.json), VKCItiesResponse.class);
                 List<Item> items = vkcItiesResponse.getResponse().getItems();

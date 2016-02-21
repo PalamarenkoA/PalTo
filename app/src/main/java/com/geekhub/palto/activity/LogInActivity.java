@@ -1,5 +1,6 @@
 package com.geekhub.palto.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import android.util.Log;
 
 import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
+import com.geekhub.palto.Servise.MessageListener;
 import com.geekhub.palto.object.User;
 import com.geekhub.palto.databinding.ActivityLogInBinding;
 import com.geekhub.palto.viewmodel.LoginActivityViewModel;
@@ -32,10 +34,12 @@ public class LogInActivity extends AppCompatActivity {
     private LoginActivityViewModel model;
     Firebase myFirebaseRef;
     SharedPreferences.Editor edit;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+        context = this;
         String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
         for(int i = 0;i<fingerprints.length;i++){
             Log.d("log",fingerprints[i]);
@@ -59,7 +63,9 @@ public class LogInActivity extends AppCompatActivity {
                         getDefaultSharedPreferences(getApplicationContext()).edit();
                 edit.putString("VKAccessToken", res.accessToken).apply();
                 edit.putString("VKUserID", res.userId).apply();
-
+                Intent serviseIntent = new Intent(context, MessageListener.class);
+                serviseIntent.putExtra("ID",res.userId);
+                context.startService(serviseIntent);
                 VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200"));
                 request.executeSyncWithListener(new VKRequest.VKRequestListener() {
                     @Override

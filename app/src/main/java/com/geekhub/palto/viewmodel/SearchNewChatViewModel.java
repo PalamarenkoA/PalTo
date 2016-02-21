@@ -1,35 +1,29 @@
 package com.geekhub.palto.viewmodel;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.MutableData;
-import com.firebase.client.Query;
-import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
 import com.geekhub.palto.SearchHelper;
+import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
+import com.geekhub.palto.object.Film;
+import com.geekhub.palto.object.Interest;
 import com.geekhub.palto.object.ItemDialogList;
-import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.httpClient.VKAbstractOperation;
-import com.vk.sdk.api.methods.VKApiBase;
-import com.vk.sdk.api.model.VKApiPhotoAlbum;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,32 +39,43 @@ public class SearchNewChatViewModel {
     private ChildEventListener mListener;
     ArrayList<UserForSearch> list;
     SharedPreferences srefs;
+    public ArrayList<String> users;
     public SearchNewChatViewModel (SearchNewChatActivity activity){
+        users = new ArrayList<>();
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         this.activity = activity;
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
         myFirebaseChat = new Firebase("https://paltochat.firebaseio.com/");
+        Firebase firebase = myFirebaseChat.child(srefs.getString("VKUserID",""));
+        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                if(iterator.hasNext()){
+                do {
+                    DataSnapshot dataSnapshot1 = iterator.next();
+                    users.add(dataSnapshot1.getKey());
+                }while (iterator.hasNext());
+            }}
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
         list = new ArrayList<>();
+
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> iterable = dataSnapshot.getChildren().iterator();
                 dataSnapshot.getChildrenCount();
                 do {
+
                     list.add(iterable.next().getValue(UserForSearch.class));
                 } while (iterable.hasNext());
 
-                SearchHelper searchHelper = new SearchHelper();
-                UserForSearch userForSearch1 = new UserForSearch();
-                userForSearch1.setCityID(2642);
-                userForSearch1.setCountryID(2);
-                UserForSearch choice = searchHelper.init(list, userForSearch1);
 
-                Log.d("logos", choice.getName());
-                ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
-                        srefs.getString("VKUserNICK", "null"), "Привет", "");
-                myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
-                myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
             }
 
             @Override
@@ -108,7 +113,40 @@ public class SearchNewChatViewModel {
     }
 
     public void startChat(View view){
-        ArrayList<String> interestSet = activity.binding.cityInterestPicker.getInterestSet();
-        interestSet.size();
+
+
+        SearchHelper searchHelper = new SearchHelper();
+        UserForSearch userForSearch = new UserForSearch();
+        Interest interest = new Interest();
+        if(activity.binding.cityInterestPicker.getInterestSet().size()>0) {
+            userForSearch.setCityID(Integer.parseInt(activity.binding.cityInterestPicker.getInterestSet().get(0)));
+        }
+        if(activity.binding.growthInterestPicker.getInterestSet().size()>0) {
+           interest.setGrowth(activity.binding.growthInterestPicker.getInterestSet().get(0));
+        }
+        if(activity.binding.eyesInterestPicker.getInterestSet().size()>0) {
+            interest.setEyes(activity.binding.eyesInterestPicker.getInterestSet().get(0));
+        }
+        userForSearch.setInterest(interest);
+        UserForSearch choice = searchHelper.init(list, userForSearch,users,
+                activity.binding.filmInterestPicker.getInterestSet(),
+                activity.binding.musikInterestPicker.getInterestSet(),
+                activity.binding.znakomInterestPicker.getInterestSet()
+                );
+        if(choice != null) {
+            ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
+                    srefs.getString("VKUserNICK", "null"), "Привет", srefs.getString("VKUserID", ""), "0");
+
+
+            myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
+            myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
+            Intent intent = new Intent(activity, ChatActivity.class);
+            intent.putExtra("FriendID", choice.getId());
+            activity.startActivity(intent);
+        }
+        else{
+            Toast.makeText(activity,"Нет ни одного подходящего пользователь",Toast.LENGTH_LONG).show();
+        }
     }
+
 }

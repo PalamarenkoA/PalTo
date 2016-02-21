@@ -3,7 +3,9 @@ package com.geekhub.palto.viewmodel;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.geekhub.palto.R;
@@ -63,19 +65,34 @@ public class FirstSettingsViewModel {
         activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
-                pushToFireBase("musik",activity.binding.musikInterestPicker);
-                pushToFireBase("film",activity.binding.filmInterestPicker);
-                pushToFireBase("znakom", activity.binding.znakomInterestPicker);
-                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("growth").setValue(activity.binding.growthInterestPicker.getInterestSet().get(0));
-                myFirebaseRef.child(srefs.getString("VKUserID","")).child("interest").child("eyes").setValue(activity.binding.eyesInterestPicker.getInterestSet().get(0));
-                myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText().toString());
-                SharedPreferences.Editor edit = PreferenceManager.
-                        getDefaultSharedPreferences(activity.getApplicationContext()).edit();
-                edit.putString("VKUserNICK",activity.binding.editTextNick.getText().toString()).apply();
-                activity.startActivity(new Intent(activity, ChatListActivity.class));
+                       if(!activity.binding.musikInterestPicker.getInterestSet().isEmpty()
+                        &&!activity.binding.filmInterestPicker.getInterestSet().isEmpty()
+                        &&!activity.binding.znakomInterestPicker.getInterestSet().isEmpty()
+                        &&!activity.binding.growthInterestPicker.getInterestSet().isEmpty()
+                        &&!activity.binding.eyesInterestPicker.getInterestSet().isEmpty()
+                        && activity.binding.editTextNick.getText().toString().length()>2)
+                {
+                    myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+                    pushToFireBase("musik", activity.binding.musikInterestPicker);
+                    pushToFireBase("film", activity.binding.filmInterestPicker);
+                    pushToFireBase("znakom", activity.binding.znakomInterestPicker);
+                    if (!activity.binding.growthInterestPicker.getInterestSet().isEmpty()) {
+                        myFirebaseRef.child(srefs.getString("VKUserID", "")).child("interest").child("growth").setValue(activity.binding.growthInterestPicker.getInterestSet().get(0));
+                    }
+                    if (!activity.binding.eyesInterestPicker.getInterestSet().isEmpty()) {
+                        myFirebaseRef.child(srefs.getString("VKUserID", "")).child("interest").child("eyes").setValue(activity.binding.eyesInterestPicker.getInterestSet().get(0));
+                    }
+                    myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText().toString());
+                    SharedPreferences.Editor edit = PreferenceManager.
+                            getDefaultSharedPreferences(activity.getApplicationContext()).edit();
+                    edit.putString("VKUserFirstSettings","true").apply();
+                    edit.putString("VKUserNICK", activity.binding.editTextNick.getText().toString()).apply();
+                    activity.startActivity(new Intent(activity, ChatListActivity.class));
 
+                }else {
+                    Toast.makeText(activity,"Заполните все полня",Toast.LENGTH_LONG).show();
 
+                }
             }
         });
 

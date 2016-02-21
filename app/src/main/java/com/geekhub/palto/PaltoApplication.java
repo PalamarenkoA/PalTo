@@ -1,6 +1,7 @@
 package com.geekhub.palto;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -14,6 +15,7 @@ import com.vk.sdk.VKSdk;
  * Created by duke0808 on 29.01.16.
  */
 public class PaltoApplication extends Application {
+    public  static Context CONTEXT;
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
@@ -29,6 +31,7 @@ public class PaltoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CONTEXT = this;
         Firebase.setAndroidContext(this);
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
