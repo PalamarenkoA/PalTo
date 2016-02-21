@@ -57,30 +57,29 @@ public class MessageListener extends Service {
            public void onDataChange(DataSnapshot dataSnapshot) {
                ArrayList<ItemDialogList> arrayList = new ArrayList();
                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-
-
-               do {
-                   DataSnapshot dataSnapshot1 = iterator.next();
-                   Iterator<DataSnapshot> iteratorSob = dataSnapshot1.getChildren().iterator();
-                   Firebase firebase = myMessageListenerFirebase.child(dataSnapshot1.getKey());
+               if (iterator.hasNext()) {
                    do {
-                       DataSnapshot dataSnapshot2 = iteratorSob.next();
-                       ItemDialogList itemDialogList = dataSnapshot2.getValue(ItemDialogList.class);
-                       Firebase firebase1 = firebase.child(dataSnapshot2.getKey());
-                       if (!itemDialogList.getId().equals(srefs.getString("VKUserID",""))) {
-                           if (itemDialogList.getReceived().length() == 0) {
-                               arrayList.add(itemDialogList);
-                               itemDialogList.setReceived("1");
-                               firebase1.setValue(itemDialogList);
+                       DataSnapshot dataSnapshot1 = iterator.next();
+                       Iterator<DataSnapshot> iteratorSob = dataSnapshot1.getChildren().iterator();
+                       Firebase firebase = myMessageListenerFirebase.child(dataSnapshot1.getKey());
+                       do {
+                           DataSnapshot dataSnapshot2 = iteratorSob.next();
+                           ItemDialogList itemDialogList = dataSnapshot2.getValue(ItemDialogList.class);
+                           Firebase firebase1 = firebase.child(dataSnapshot2.getKey());
+                           if (!itemDialogList.getId().equals(srefs.getString("VKUserID", ""))) {
+                               if (itemDialogList.getReceived().length() == 0) {
+                                   arrayList.add(itemDialogList);
+                                   itemDialogList.setReceived("1");
+                                   firebase1.setValue(itemDialogList);
 
+                               }
                            }
-                       }
 
-                   } while (iteratorSob.hasNext());
+                       } while (iteratorSob.hasNext());
 
-               } while (iterator.hasNext());
+                   } while (iterator.hasNext());
 
-
+               }
                if (arrayList.size() == 1) {
                    createOneNotification(context, arrayList.get(0));
                }
