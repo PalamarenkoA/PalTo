@@ -78,11 +78,9 @@ public class ChatListViewModel {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor edit = PreferenceManager.
-                        getDefaultSharedPreferences(activity.getApplicationContext()).edit();
-                Log.d("logos",idArray.get(position));
-                edit.putString("VKUserCHAT", idArray.get(position)).apply();
-                activity.startActivity(new Intent(activity, ChatActivity.class));
+                Intent intent = new Intent(activity,ChatActivity.class);
+                intent.putExtra("FriendID",idArray.get(position));
+                activity.startActivity(intent);
             }
         });
         activity.binding.addNewChatButton.setOnClickListener(new View.OnClickListener() {

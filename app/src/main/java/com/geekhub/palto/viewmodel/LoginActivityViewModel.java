@@ -1,8 +1,12 @@
 package com.geekhub.palto.viewmodel;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 
+import com.geekhub.palto.Servise.MessageListener;
+import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.activity.LogInActivity;
 import com.geekhub.palto.useragent.UserAgent;
@@ -17,9 +21,22 @@ public class LoginActivityViewModel {
 
     public LoginActivityViewModel(LogInActivity activity) {
         this.activity = activity;
+        Intent serviseIntent = new Intent(activity, MessageListener.class);
+        activity.startService(serviseIntent);
+        SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity);
         if (UserAgent.get().getToken().length()>0){
-            Intent intent = new Intent(activity, FirstSettingsActivity.class);
+            Intent intent;
+            if(srefs.getString("VKUserFirstSettings","").length()>0){
+            intent = new Intent(activity, ChatListActivity.class);
+            }else{
+            intent = new Intent(activity, FirstSettingsActivity.class);
+           }
             activity.startActivity(intent);
+
+
+
+
+
         }
     }
 

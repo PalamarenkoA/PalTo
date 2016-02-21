@@ -33,7 +33,12 @@
         <activity
             android:name=".activity.SearchNewChatActivity"
             android:label="@string/title_activity_search_new_chat"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".Servise.MessageListener"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
