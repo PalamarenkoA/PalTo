@@ -31,14 +31,15 @@
                 android:layout_alignParentRight="true"
                 android:paddingLeft="10dp"
                 android:paddingBottom="6dp"
-                android:textColor="@android:color/black" android:textStyle="bold"
-                android:layout_marginRight="12dp" />
+                android:textColor="@android:color/primary_text_dark"
+                android:textStyle="bold"
+                android:layout_marginRight="22dp" />
 
             <TextView
                 android:text="@{model.lastDate}"
                 android:id="@+id/lastDate"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/sinch_purple"
+                android:textColor="@color/gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="2dp"
@@ -59,6 +60,7 @@
                     android:text="@{model.lastMessage}"
                     android:id="@+id/lastMessage"
                     android:paddingLeft="12dp"
+                    android:layout_marginRight="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"

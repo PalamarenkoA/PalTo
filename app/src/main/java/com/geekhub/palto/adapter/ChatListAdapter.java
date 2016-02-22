@@ -63,8 +63,5 @@ public class ChatListAdapter extends FirebaseListAdapter<ItemDialogList> {
             MessageRightBinding binding = DataBindingUtil.getBinding(v);
             binding.setModel(model);
         }
-
-
-
     }
 }
