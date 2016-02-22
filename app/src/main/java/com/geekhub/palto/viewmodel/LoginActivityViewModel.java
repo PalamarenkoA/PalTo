@@ -21,12 +21,16 @@ public class LoginActivityViewModel {
 
     public LoginActivityViewModel(LogInActivity activity) {
         this.activity = activity;
-        Intent serviseIntent = new Intent(activity, MessageListener.class);
-        activity.startService(serviseIntent);
+//        Intent serviseIntent = new Intent(activity, MessageListener.class);
+//        activity.startService(serviseIntent);
         SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity);
         if (UserAgent.get().getToken().length()>0){
             Intent intent;
             if(srefs.getString("VKUserFirstSettings","").length()>0){
+                LogInActivity.authorized=true;
+                Intent serviseIntent = new Intent(activity, MessageListener.class);
+                serviseIntent.putExtra("ID", UserAgent.get().getUserId());
+                activity.startService(serviseIntent);
             intent = new Intent(activity, ChatListActivity.class);
             }else{
             intent = new Intent(activity, FirstSettingsActivity.class);
