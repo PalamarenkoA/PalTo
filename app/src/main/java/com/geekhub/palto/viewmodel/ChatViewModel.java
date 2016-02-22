@@ -57,9 +57,20 @@ public class ChatViewModel {
             }
         });
 
-        activity.binding.chatList.setAdapter(chatListAdapter);
+        final ListView chatList = activity.binding.chatList;
+        chatList.setAdapter(chatListAdapter);
 
-
+//        chatList.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//            @Override
+//            public void onViewAttachedToWindow(View v) {
+//                chatList.smoothScrollToPosition(chatList.getMaxScrollAmount()+4);
+//            }
+//
+//            @Override
+//            public void onViewDetachedFromWindow(View v) {
+//
+//            }
+//        });
 
         Firebase firebase = new Firebase("https://palto.firebaseio.com/").child(intent.getStringExtra("FriendID"));
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,11 +85,6 @@ public class ChatViewModel {
 
             }
         });
-
-
-
-
         Picasso.with(activity).load(srefs.getString("VKUserICON","")).into(activity.binding.myIcon);
-
     }
 }
