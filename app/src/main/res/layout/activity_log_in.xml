@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:translationZ="5dp"
         android:elevation="5dp"
-        android:onClick="@{model.auth}"/>
+        android:onClick="@{model.auth}" />
 
 </RelativeLayout>
 </layout>
