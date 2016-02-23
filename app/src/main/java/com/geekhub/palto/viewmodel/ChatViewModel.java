@@ -55,15 +55,17 @@ public class ChatViewModel {
         });
 
         final RecyclerView chatList = activity.binding.chatList;
-        chatList.setLayoutManager(new LinearLayoutManager(activity));
-        chatList.setAdapter(newChatAdapter);
-
-        chatList.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity){
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                chatList.smoothScrollToPosition(chatList.getBottom());
+            public void onItemsAdded(RecyclerView recyclerView, int positionStart, int itemCount) {
+                super.onItemsAdded(recyclerView, positionStart, itemCount);
+                recyclerView.smoothScrollToPosition(chatList.getBottom());
             }
-        });
+        };
+
+        chatList.setLayoutManager(layoutManager);
+        chatList.setAdapter(newChatAdapter);
+        chatList.smoothScrollToPosition(chatList.getBottom());
 
         Firebase firebase = new Firebase("https://palto.firebaseio.com/").child(intent.getStringExtra("FriendID"));
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
