@@ -3,17 +3,16 @@ package com.geekhub.palto.viewmodel;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
-import com.geekhub.palto.adapter.ChatListAdapter;
+import com.geekhub.palto.adapter.NewChatAdapter;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.UserForSearch;
 import com.geekhub.palto.useragent.UserAgent;
@@ -27,7 +26,6 @@ public class ChatViewModel {
     SharedPreferences srefs;
     Firebase myFirebaseRef;
     Intent intent;
-    private final ChatListAdapter chatListAdapter;
 
     public ChatViewModel ( final ChatActivity activity){
         this.activity = activity;
@@ -37,7 +35,8 @@ public class ChatViewModel {
         intent = activity.getIntent();
 
         final Firebase chatFirebase = myFirebaseRef.child(srefs.getString("VKUserID","")).child(intent.getStringExtra("FriendID"));
-        chatListAdapter = new ChatListAdapter(chatFirebase,activity, R.layout.dialog_list_item);
+
+        final NewChatAdapter newChatAdapter = new NewChatAdapter(chatFirebase, ItemDialogList.class, activity);
 
 
         activity.binding.button.setOnClickListener(new View.OnClickListener() {
@@ -51,26 +50,20 @@ public class ChatViewModel {
                     chatFirebase.push().setValue(itemDialogList);
                     myFirebaseRef.child(intent.getStringExtra("FriendID")).child(srefs.getString("VKUserID", "")).push().setValue(itemDialogList);
                     activity.binding.editText.setText("");
-                    ListView chatList = activity.binding.chatList;
-                    ((ListView) chatList).smoothScrollToPosition(chatList.getCount() + 1);
                 }
             }
         });
 
-        final ListView chatList = activity.binding.chatList;
-        chatList.setAdapter(chatListAdapter);
+        final RecyclerView chatList = activity.binding.chatList;
+        chatList.setLayoutManager(new LinearLayoutManager(activity));
+        chatList.setAdapter(newChatAdapter);
 
-//        chatList.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-//            @Override
-//            public void onViewAttachedToWindow(View v) {
-//                chatList.smoothScrollToPosition(chatList.getMaxScrollAmount()+4);
-//            }
-//
-//            @Override
-//            public void onViewDetachedFromWindow(View v) {
-//
-//            }
-//        });
+        chatList.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                chatList.smoothScrollToPosition(chatList.getBottom());
+            }
+        });
 
         Firebase firebase = new Firebase("https://palto.firebaseio.com/").child(intent.getStringExtra("FriendID"));
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
