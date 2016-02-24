@@ -22,7 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChatListActivity" />
+        <activity
+            android:name=".activity.ChatListActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ChatActivity"
             android:label="@string/title_activity_chat"
@@ -36,11 +39,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".Servise.MessageListener"
+            android:name=".servise.MessageListener"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.UserInfoActivity"></activity>
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity
+            android:name=".activity.UserSettingsActivity"
+            android:label="@string/title_activity_user_settings"/>
     </application>
 
 </manifest>

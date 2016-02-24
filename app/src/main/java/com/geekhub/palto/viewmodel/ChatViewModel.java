@@ -89,4 +89,9 @@ public class ChatViewModel {
         intent.putExtra("FriendID", this.intent.getStringExtra("FriendID"));
         activity.startActivity(intent);
     }
+    public void clickUserSettings (View view){
+        Intent intent = new Intent(activity, UserInfoActivity.class);
+        intent.putExtra("FriendID", srefs.getString("VKUserID",""));
+        activity.startActivity(intent);
+    }
 }
