@@ -40,18 +40,17 @@ public class ChatListViewModel {
         final ArrayList <String> idArray = new ArrayList<>();
         Firebase firebaseForListAdapter = new Firebase("https://paltochat.firebaseio.com");
         Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID","null"));
-        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList);
+        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList,idArray);
         chatfirebase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("logos", dataSnapshot.getKey());
                 idArray.add(dataSnapshot.getKey());
                 ArrayList<ItemDialogList> arrayList = new ArrayList();
               Iterator<DataSnapshot> iterator =  dataSnapshot.getChildren().iterator();
                 do {
                     arrayList.add(iterator.next().getValue(ItemDialogList.class));
                 }while (iterator.hasNext());
-                Log.d("logos", arrayList.get(arrayList.size() - 1).getLastDate());
+
                 itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
                 dialogListAdapter.notifyDataSetChanged();
 
