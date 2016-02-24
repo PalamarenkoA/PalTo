@@ -3,9 +3,7 @@ package com.geekhub.palto.adapter;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.databinding.tool.Binding;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +14,8 @@ import com.geekhub.palto.databinding.MessageLeftBinding;
 import com.geekhub.palto.databinding.MessageRightBinding;
 import com.geekhub.palto.object.ItemDialogList;
 
-import java.util.ArrayList;
 
-/**
- * Created by duke0808 on 23.02.16.
- */
+
 public class NewChatAdapter extends FirebaseRecyclerAdapter<NewChatAdapter.ViewHolder, ItemDialogList> {
     Activity activity;
 

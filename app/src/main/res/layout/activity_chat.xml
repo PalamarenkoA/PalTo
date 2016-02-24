@@ -40,6 +40,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/yourIcon"
+        android:clickable="true"
+        android:onClick="@{model.clickUserInfo}"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

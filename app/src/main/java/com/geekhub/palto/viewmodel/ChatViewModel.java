@@ -12,6 +12,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.activity.ChatActivity;
+import com.geekhub.palto.activity.UserInfoActivity;
 import com.geekhub.palto.adapter.NewChatAdapter;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.UserForSearch;
@@ -34,7 +35,8 @@ public class ChatViewModel {
         myFirebaseRef = new Firebase("https://paltochat.firebaseio.com/");
         intent = activity.getIntent();
 
-        final Firebase chatFirebase = myFirebaseRef.child(srefs.getString("VKUserID","")).child(intent.getStringExtra("FriendID"));
+        final Firebase chatFirebase = myFirebaseRef.child(srefs.getString("VKUserID",""))
+                .child(intent.getStringExtra("FriendID"));
 
         final NewChatAdapter newChatAdapter = new NewChatAdapter(chatFirebase, ItemDialogList.class, activity);
 
@@ -81,5 +83,10 @@ public class ChatViewModel {
             }
         });
         Picasso.with(activity).load(srefs.getString("VKUserICON","")).into(activity.binding.myIcon);
+    }
+    public void clickUserInfo (View view){
+        Intent intent = new Intent(activity, UserInfoActivity.class);
+        intent.putExtra("FriendID", this.intent.getStringExtra("FriendID"));
+        activity.startActivity(intent);
     }
 }

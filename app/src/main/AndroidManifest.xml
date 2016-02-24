@@ -38,7 +38,9 @@
         <service
             android:name=".Servise.MessageListener"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
+        <activity android:name=".activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>
