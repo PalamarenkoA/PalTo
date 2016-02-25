@@ -1,4 +1,4 @@
-package com.geekhub.palto.Servise;
+package com.geekhub.palto.servise;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,7 +10,6 @@ import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -21,9 +20,7 @@ import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.LogInActivity;
-import com.geekhub.palto.object.Item;
 import com.geekhub.palto.object.ItemDialogList;
-import com.geekhub.palto.useragent.UserAgent;
 
 import java.util.ArrayList;
 import java.util.Iterator;

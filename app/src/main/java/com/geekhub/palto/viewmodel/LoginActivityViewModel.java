@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 
-import com.geekhub.palto.Servise.MessageListener;
+import com.geekhub.palto.servise.MessageListener;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.activity.LogInActivity;

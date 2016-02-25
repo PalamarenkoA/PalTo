@@ -156,6 +156,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     }
 
     public void setItemsFromVKRequest(final VKRequest request){
+        button.setEnabled(false);
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -178,6 +179,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
 
                 setItems(nameList);
                 getIds = true;
+                button.setEnabled(true);
             }
 
             @Override
