@@ -41,6 +41,7 @@ import java.util.Iterator;
 public class ChatListViewModel {
     ChatListActivity activity;
     SharedPreferences srefs;
+    int count = 0;
     public ChatListViewModel (final ChatListActivity activity){
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
@@ -66,76 +67,81 @@ public class ChatListViewModel {
         Firebase firebaseForListAdapter = new Firebase("https://paltochat.firebaseio.com");
         Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID","null"));
         final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList,photo);
-        chatfirebase.addChildEventListener(new ChildEventListener() {
+        chatfirebase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot.getKey());
-                firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-                        photo.add(userForSearch.getPhoto_200());
-                        dialogListAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-                idArray.add(dataSnapshot.getKey());
-
-                ArrayList<ItemDialogList> arrayList = new ArrayList();
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
                 do {
-                    arrayList.add(iterator.next().getValue(ItemDialogList.class));
+                    DataSnapshot dataSnapshot1 = iterator.next();
+                    idArray.add(dataSnapshot1.getKey());
+                    ArrayList<ItemDialogList> arrayList = new ArrayList();
+                    Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                    do {
+                        arrayList.add(iterator1.next().getValue(ItemDialogList.class));
+                    } while (iterator1.hasNext());
+
+                    itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
+
+
                 } while (iterator.hasNext());
+                Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
+                do {
+                    DataSnapshot dataSnapshot1 = iterator2.next();
+                    Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
+                    firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                            photo.add(userForSearch.getPhoto_200());
+                            dialogListAdapter.notifyDataSetChanged();
+                            count++;
+                            if(idArray.size()==count){
+                                activity.binding.dialogList.setAdapter(dialogListAdapter);
+                            }
 
-                itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
+                        }
 
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
 
+                        }
+                    });
+
+                }while (iterator2.hasNext());
             }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                @Override
+                public void onCancelled (FirebaseError firebaseError){
 
+                }
             }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            );
 
-            }
+            activity.binding.dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener()
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            {
 
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-
-
-        activity.binding.dialogList.setAdapter(dialogListAdapter);
-        activity.binding.dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity,ChatActivity.class);
-                intent.putExtra("FriendID",idArray.get(position));
+                @Override
+                public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
+                Intent intent = new Intent(activity, ChatActivity.class);
+                intent.putExtra("FriendID", idArray.get(position));
                 activity.startActivity(intent);
             }
-        });
-        activity.binding.addNewChatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.startActivity(new Intent(activity, SearchNewChatActivity.class));
             }
-        });
+
+            );
+            activity.binding.addNewChatButton.setOnClickListener(new View.OnClickListener()
+
+                                                                 {
+                                                                     @Override
+                                                                     public void onClick(View v) {
+                                                                         activity.startActivity(new Intent(activity, SearchNewChatActivity.class));
+                                                                     }
+                                                                 }
+
+            );
 
 
+        }
     }
-}
