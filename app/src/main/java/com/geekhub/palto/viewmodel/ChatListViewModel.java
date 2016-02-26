@@ -1,10 +1,16 @@
 package com.geekhub.palto.viewmodel;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,9 +22,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
+import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.User;
@@ -35,9 +43,23 @@ public class ChatListViewModel {
     SharedPreferences srefs;
     public ChatListViewModel (final ChatListActivity activity){
         this.activity = activity;
-
-        activity.setSupportActionBar(activity.binding.toolbar);
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        activity.setSupportActionBar(activity.binding.toolbar);
+        activity.binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item1:
+                        Intent intent = new Intent(activity, UserSettingsActivity.class);
+                        intent.putExtra("FriendID", srefs.getString("VKUserID", ""));
+                        activity.startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
         final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
         final ArrayList <String> idArray = new ArrayList<>();
         final ArrayList<String> photo = new ArrayList<>();
