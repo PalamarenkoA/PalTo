@@ -51,7 +51,7 @@ public class ChatViewModel {
                             , activity.binding.editText.getText().toString(),
                             UserAgent.get().getUserId(), "0");
                     chatFirebase.push().setValue(itemDialogList);
-                    myFirebaseRef.child(intent.getStringExtra("FriendID")).child(srefs.getString("VKUserID", "")).push().setValue(itemDialogList);
+                    myFirebaseRef.child(intent.getStringExtra("FriendID")).child(intent.getStringExtra("FriendID")).push().setValue(itemDialogList);
                     activity.binding.editText.setText("");
                 }
             }
