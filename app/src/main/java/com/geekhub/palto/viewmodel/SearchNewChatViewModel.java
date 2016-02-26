@@ -13,17 +13,15 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
-import com.geekhub.palto.SearchHelper;
+import com.geekhub.palto.Helper.SearchHelper;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
-import com.geekhub.palto.object.Film;
 import com.geekhub.palto.object.Interest;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.UserForSearch;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -136,7 +134,6 @@ public class SearchNewChatViewModel {
         if(choice != null) {
             ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
                     srefs.getString("VKUserNICK", "null"), "Привет", srefs.getString("VKUserID", ""), "0");
-
 
             myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
             myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);

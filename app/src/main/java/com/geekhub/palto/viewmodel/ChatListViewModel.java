@@ -15,11 +15,13 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
 import com.geekhub.palto.object.ItemDialogList;
+import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
 
 import java.util.ArrayList;
@@ -38,21 +40,37 @@ public class ChatListViewModel {
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
         final ArrayList <String> idArray = new ArrayList<>();
+        final ArrayList<String> photo = new ArrayList<>();
         Firebase firebaseForListAdapter = new Firebase("https://paltochat.firebaseio.com");
         Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID","null"));
-        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList,idArray);
+        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList,photo);
         chatfirebase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot.getKey());
+                firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                        photo.add(userForSearch.getPhoto_200());
+                        dialogListAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 idArray.add(dataSnapshot.getKey());
+
                 ArrayList<ItemDialogList> arrayList = new ArrayList();
-              Iterator<DataSnapshot> iterator =  dataSnapshot.getChildren().iterator();
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
                 do {
                     arrayList.add(iterator.next().getValue(ItemDialogList.class));
-                }while (iterator.hasNext());
+                } while (iterator.hasNext());
 
                 itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
-                dialogListAdapter.notifyDataSetChanged();
+
 
             }
 
@@ -76,6 +94,7 @@ public class ChatListViewModel {
 
             }
         });
+
 
 
         activity.binding.dialogList.setAdapter(dialogListAdapter);

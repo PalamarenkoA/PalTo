@@ -1,9 +1,10 @@
-package com.geekhub.palto;
+package com.geekhub.palto.Helper;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.geekhub.palto.PaltoApplication;
 import com.geekhub.palto.object.Interest;
 import com.geekhub.palto.object.UserForSearch;
 
@@ -70,10 +71,13 @@ public class SearchHelper {
                                               ArrayList<String> znakoms
                                               ){
 
+
         for (UserForSearch userForSearch : list){
-            ArrayList<String> znakomsUser = createList(userForSearch.getInterest(),2);
-            ArrayList<String> filmsUser = createList(userForSearch.getInterest(),0);
-            ArrayList<String> musiksUser = createList(userForSearch.getInterest(),1);
+            Helper helper = new Helper();
+            ArrayList<String> znakomsUser = helper.createList(userForSearch.getInterest(), 2);
+            ArrayList<String> filmsUser =  helper.createList(userForSearch.getInterest(), 0);
+            ArrayList<String> musiksUser =  helper.createList(userForSearch.getInterest(),1);
+
             for(String s:films){
                 if(filmsUser.contains(s)){
                     userForSearch.setPoints(userForSearch.getPoints() + POINTFORFILM);
@@ -103,29 +107,5 @@ public class SearchHelper {
 
     }
 return list;}
-    private ArrayList<String> createList (Interest interest, int par){
-    ArrayList<String> arrayList = new ArrayList<>();
-    if(par == 0){
-        arrayList.add(interest.getFilm().getFilm0());
-        arrayList.add(interest.getFilm().getFilm1());
-        arrayList.add(interest.getFilm().getFilm2());
-        arrayList.add(interest.getFilm().getFilm3());
-        arrayList.add(interest.getFilm().getFilm4());
-    }else {
-        if(par ==1){
-            arrayList.add(interest.getMusik().getMusik0());
-            arrayList.add(interest.getMusik().getMusik1());
-            arrayList.add(interest.getMusik().getMusik2());
-            arrayList.add(interest.getMusik().getMusik3());
-            arrayList.add(interest.getMusik().getMusik4());
-        }else{
-            if(par ==2){
-            arrayList.add(interest.getZnakom().getZnakom0());
-            arrayList.add(interest.getZnakom().getZnakom1());
-            arrayList.add(interest.getZnakom().getZnakom2());
-           }
-        }
-    }
 
-   return arrayList; }
 }

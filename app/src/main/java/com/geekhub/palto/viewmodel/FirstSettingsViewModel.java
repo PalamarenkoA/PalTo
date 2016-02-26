@@ -16,6 +16,8 @@ import com.geekhub.palto.customviews.PolToMultipleChoicePicker;
 import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 /**
  * Created by duke0808 on 29.01.16.
  */
@@ -65,13 +67,12 @@ public class FirstSettingsViewModel {
         activity.binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                       if(!activity.binding.musikInterestPicker.getInterestSet().isEmpty()
-                        &&!activity.binding.filmInterestPicker.getInterestSet().isEmpty()
-                        &&!activity.binding.znakomInterestPicker.getInterestSet().isEmpty()
-                        &&!activity.binding.growthInterestPicker.getInterestSet().isEmpty()
-                        &&!activity.binding.eyesInterestPicker.getInterestSet().isEmpty()
-                        && activity.binding.editTextNick.getText().toString().length()>2)
-                {
+                if (!activity.binding.musikInterestPicker.getInterestSet().isEmpty()
+                        && !activity.binding.filmInterestPicker.getInterestSet().isEmpty()
+                        && !activity.binding.znakomInterestPicker.getInterestSet().isEmpty()
+                        && !activity.binding.growthInterestPicker.getInterestSet().isEmpty()
+                        && !activity.binding.eyesInterestPicker.getInterestSet().isEmpty()
+                        && activity.binding.editTextNick.getText().toString().length() > 2) {
                     myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
                     pushToFireBase("musik", activity.binding.musikInterestPicker);
                     pushToFireBase("film", activity.binding.filmInterestPicker);
@@ -85,12 +86,12 @@ public class FirstSettingsViewModel {
                     myFirebaseRef.child(srefs.getString("VKUserID", "")).child("nick").setValue(activity.binding.editTextNick.getText().toString());
                     SharedPreferences.Editor edit = PreferenceManager.
                             getDefaultSharedPreferences(activity.getApplicationContext()).edit();
-                    edit.putString("VKUserFirstSettings","true").apply();
+                    edit.putString("VKUserFirstSettings", "true").apply();
                     edit.putString("VKUserNICK", activity.binding.editTextNick.getText().toString()).apply();
                     activity.startActivity(new Intent(activity, ChatListActivity.class));
 
-                }else {
-                    Toast.makeText(activity,"Заполните все полня",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(activity, "Заполните все полня", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -101,7 +102,6 @@ public class FirstSettingsViewModel {
         activity.binding.filmInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.film));
         activity.binding.growthInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.growth));
         activity.binding.eyesInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.eyes));
-
     }
 
     private void pushToFireBase(String name, PolToMultipleChoicePicker polToMultipleChoicePicker){

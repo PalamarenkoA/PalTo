@@ -26,6 +26,7 @@ public class DialogListAdapter extends BaseAdapter{
     ArrayList <ItemDialogList>dialogArrayList;
     Context context;
     ArrayList<String> iDAraay;
+    Thread thread;
     public DialogListAdapter(Context context, ArrayList <ItemDialogList>dialogArrayList, ArrayList<String> arrayList){
         this.dialogArrayList = dialogArrayList;
         this.context = context;
@@ -55,7 +56,6 @@ public class DialogListAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-       Firebase firebase = new Firebase("https://palto.firebaseio.com").child(iDAraay.get(position));
        final ViewHolder viewHolder;
         if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) context
@@ -75,18 +75,8 @@ public class DialogListAdapter extends BaseAdapter{
         viewHolder.lastDate.setText(dialogArrayList.get(position).getLastDate());
         viewHolder.lastMessage.setText(dialogArrayList.get(position).getLastMessage());
         viewHolder.nick.setText(dialogArrayList.get(position).getNick());
-        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-                Picasso.with(context).load(userForSearch.getPhoto_200()).into(viewHolder.iconImage);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        if((position +1)<=iDAraay.size()){
+        Picasso.with(context).load(iDAraay.get(position)).into(viewHolder.iconImage);}
         return convertView;
 
     }
