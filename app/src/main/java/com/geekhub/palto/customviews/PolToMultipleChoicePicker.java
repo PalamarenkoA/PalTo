@@ -156,6 +156,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     }
 
     public void setItemsFromVKRequest(final VKRequest request){
+        button.setEnabled(false);
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
@@ -178,6 +179,7 @@ public class PolToMultipleChoicePicker extends LinearLayout {
 
                 setItems(nameList);
                 getIds = true;
+                button.setEnabled(true);
             }
 
             @Override
@@ -262,8 +264,15 @@ public class PolToMultipleChoicePicker extends LinearLayout {
                 }
             });
         } else {
+            int choice = 0;
+            for(int i = 0;i<booleans.length;i++){
+                if(booleans[i]){
+                    choice =i;
+                }
+
+            }
             builder.setTitle(mLabelTv.getText()).
-                    setSingleChoiceItems(strings, 0, new DialogInterface.OnClickListener() {
+                    setSingleChoiceItems(strings, choice, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             for (boolean b :
@@ -291,7 +300,13 @@ public class PolToMultipleChoicePicker extends LinearLayout {
 
         dialog = builder.create();
     }
-
+    public void setInterest(ArrayList<String> arrayList){
+        for (int i=0;i<strings.length;i++){
+            if(arrayList.contains(strings[i])){
+                booleans[i] = true;
+            }
+        }
+    }
     public ArrayList<String> getInterestSet(){
         ArrayList<String> set = new ArrayList<>();
         String[] listToAdd;
@@ -304,10 +319,10 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         } else {
             listToAdd = strings;
         }
-
+        if(strings != null){
         for (int i=0;i<strings.length;i++){
             if (booleans[i]) set.add(listToAdd[i]);
-        }
+        }}
         return set;
     }
  }

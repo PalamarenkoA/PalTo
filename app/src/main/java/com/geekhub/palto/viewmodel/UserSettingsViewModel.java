@@ -1,27 +1,33 @@
 package com.geekhub.palto.viewmodel;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.geekhub.palto.Helper.Helper;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
+import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.binding.BindableString;
 import com.geekhub.palto.customviews.PolToMultipleChoicePicker;
+import com.geekhub.palto.object.UserForSearch;
 import com.geekhub.palto.useragent.UserAgent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 /**
- * Created by duke0808 on 29.01.16.
+ * Created by andrey on 24.02.16.
  */
-public class FirstSettingsViewModel {
+public class UserSettingsViewModel {
     Firebase myFirebaseRef;
     public BindableString getUserId() {
         return userId;
@@ -47,17 +53,17 @@ public class FirstSettingsViewModel {
         this.nickName = nickName;
     }
 
-    FirstSettingsActivity activity;
+    UserSettingsActivity activity;
     SharedPreferences srefs;
     BindableString userId = new BindableString();
     BindableString imageUrl = new BindableString();
     BindableString nickName = new BindableString();
 
 
-    public FirstSettingsViewModel(final FirstSettingsActivity activity) {
+    public UserSettingsViewModel (final UserSettingsActivity activity) {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
         userId.set(UserAgent.get().getUserId());
 
 
@@ -73,7 +79,7 @@ public class FirstSettingsViewModel {
                         && !activity.binding.growthInterestPicker.getInterestSet().isEmpty()
                         && !activity.binding.eyesInterestPicker.getInterestSet().isEmpty()
                         && activity.binding.editTextNick.getText().toString().length() > 2) {
-                    myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+
                     pushToFireBase("musik", activity.binding.musikInterestPicker);
                     pushToFireBase("film", activity.binding.filmInterestPicker);
                     pushToFireBase("znakom", activity.binding.znakomInterestPicker);
@@ -102,6 +108,32 @@ public class FirstSettingsViewModel {
         activity.binding.filmInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.film));
         activity.binding.growthInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.growth));
         activity.binding.eyesInterestPicker.setItemsFromResource(activity.getResources().getStringArray(R.array.eyes));
+            myFirebaseRef.child(srefs.getString("VKUserID", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                    Helper helper = new Helper();
+                    activity.binding.musikInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 1));
+                    activity.binding.filmInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 0));
+                    activity.binding.znakomInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 2));
+                    ArrayList<String> arrayList = new ArrayList();
+                    arrayList.add(userForSearch.getInterest().getGrowth());
+                    activity.binding.growthInterestPicker.setInterest(arrayList);
+                    ArrayList<String> arrayList1 = new ArrayList();
+                    arrayList1.add(userForSearch.getInterest().getEyes());
+                    activity.binding.eyesInterestPicker.setInterest(arrayList1);
+                    activity.binding.editTextNick.setText(userForSearch.getNick());
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+
     }
 
     private void pushToFireBase(String name, PolToMultipleChoicePicker polToMultipleChoicePicker){
