@@ -1,23 +1,13 @@
 package com.geekhub.palto.viewmodel;
 
-import android.content.ComponentName;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -29,7 +19,6 @@ import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
 import com.geekhub.palto.object.ItemDialogList;
-import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
 
 import java.util.ArrayList;
