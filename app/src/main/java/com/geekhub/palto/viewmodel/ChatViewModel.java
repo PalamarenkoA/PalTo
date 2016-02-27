@@ -13,6 +13,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.UserInfoActivity;
+import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.adapter.NewChatAdapter;
 import com.geekhub.palto.object.ItemDialogList;
 import com.geekhub.palto.object.UserForSearch;
@@ -48,9 +49,10 @@ public class ChatViewModel {
                     ItemDialogList itemDialogList = new ItemDialogList(srefs.getString("VKUserICON", "null"),
                             srefs.getString("VKUserNICK", "nick")
                             , activity.binding.editText.getText().toString(),
-                            UserAgent.get().getUserId(), "0");
+                            srefs.getString("VKUserID",""), "0");
                     chatFirebase.push().setValue(itemDialogList);
-                    myFirebaseRef.child(intent.getStringExtra("FriendID")).child(srefs.getString("VKUserID", "")).push().setValue(itemDialogList);
+
+                    myFirebaseRef.child(intent.getStringExtra("FriendID")).child(srefs.getString("VKUserID","")).push().setValue(itemDialogList);
                     activity.binding.editText.setText("");
                 }
             }
@@ -90,7 +92,7 @@ public class ChatViewModel {
         activity.startActivity(intent);
     }
     public void clickUserSettings (View view){
-        Intent intent = new Intent(activity, UserInfoActivity.class);
+        Intent intent = new Intent(activity, UserSettingsActivity.class);
         intent.putExtra("FriendID", srefs.getString("VKUserID",""));
         activity.startActivity(intent);
     }
