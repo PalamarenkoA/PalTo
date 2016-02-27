@@ -33,6 +33,7 @@ public class PaltoApplication extends Application {
         super.onCreate();
         CONTEXT = this;
         Firebase.setAndroidContext(this);
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
         UserAgent.appContext=this;
