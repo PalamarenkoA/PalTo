@@ -38,7 +38,7 @@ public class DialogListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
+    public ItemDialogList getItem(int position) {
         return dialogArrayList.get(position);
     }
 
@@ -46,6 +46,7 @@ public class DialogListAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return 0;
     }
+
     static class ViewHolder {
         ImageView iconImage;
         ImageView iconImageLastMes;
