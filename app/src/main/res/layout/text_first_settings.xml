@@ -39,12 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/imageView3"
-                    android:background="@drawable/ic_location"
-                    android:layout_margin="10dp" />
+                <!--<ImageView-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:id="@+id/imageView3"-->
+                    <!--android:background="@drawable/ic_location"-->
+                    <!--android:layout_margin="10dp" />-->
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -83,12 +83,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageView4"
-                android:background="@drawable/ic_fimale"
-                android:layout_margin="10dp" />
+            <!--<ImageView-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:id="@+id/imageView4"-->
+                <!--android:background="@drawable/ic_fimale"-->
+                <!--android:layout_margin="10dp" />-->
 
             <TextView
                 android:layout_width="wrap_content"

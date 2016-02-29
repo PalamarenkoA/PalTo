@@ -67,7 +67,8 @@ public class ChatViewModel {
                 recyclerView.smoothScrollToPosition(chatList.getBottom());
             }
         };
-
+        layoutManager.setReverseLayout(false);
+        layoutManager.setStackFromEnd(true);
         chatList.setLayoutManager(layoutManager);
         chatList.setAdapter(newChatAdapter);
         chatList.smoothScrollToPosition(chatList.getBottom());
