@@ -89,6 +89,7 @@ public class FirstSettingsViewModel {
                     edit.putString("VKUserFirstSettings", "true").apply();
                     edit.putString("VKUserNICK", activity.binding.editTextNick.getText().toString()).apply();
                     activity.startActivity(new Intent(activity, ChatListActivity.class));
+                    activity.finish();
 
                 } else {
                     Toast.makeText(activity, "Заполните все полня", Toast.LENGTH_LONG).show();

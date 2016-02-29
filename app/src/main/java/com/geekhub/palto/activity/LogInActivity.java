@@ -92,6 +92,7 @@ public class LogInActivity extends AppCompatActivity {
                 });
                 Intent intent = new Intent(getApplicationContext(), FirstSettingsActivity.class);
                 startActivity(intent);
+                finish();
             }
             @Override
             public void onError(VKError error) {
