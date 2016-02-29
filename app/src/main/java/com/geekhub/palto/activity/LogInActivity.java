@@ -68,7 +68,7 @@ public class LogInActivity extends AppCompatActivity {
                 Intent serviseIntent = new Intent(context, MessageListener.class);
                 serviseIntent.putExtra("ID",res.userId);
                 context.startService(serviseIntent);
-                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200"));
+                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200,photo_max"));
                 request.executeSyncWithListener(new VKRequest.VKRequestListener() {
                     @Override
                     public void onComplete(VKResponse response) {
@@ -76,7 +76,9 @@ public class LogInActivity extends AppCompatActivity {
                         VKList abc = (VKList) response.parsedModel;
 
                         try {
+
                             User user = new User(abc.get(0).fields);
+                            edit.putString("VKmaxIcon", String.valueOf(abc.get(0).fields.get("photo_max")));
                             edit.putString("VKUserICON",user.getPhoto_200()).apply();
                             edit.putString("VKUserNAME",user.getName()+" "+user.getLastName()).apply();
                             SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

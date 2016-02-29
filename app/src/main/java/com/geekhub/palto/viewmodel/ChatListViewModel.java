@@ -61,45 +61,46 @@ public class ChatListViewModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                do {
-                    DataSnapshot dataSnapshot1 = iterator.next();
-                    idArray.add(dataSnapshot1.getKey());
-                    ArrayList<ItemDialogList> arrayList = new ArrayList();
-                    Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                if (iterator.hasNext()) {
                     do {
-                        arrayList.add(iterator1.next().getValue(ItemDialogList.class));
-                    } while (iterator1.hasNext());
+                        DataSnapshot dataSnapshot1 = iterator.next();
+                        idArray.add(dataSnapshot1.getKey());
+                        ArrayList<ItemDialogList> arrayList = new ArrayList();
+                        Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                        do {
+                            arrayList.add(iterator1.next().getValue(ItemDialogList.class));
+                        } while (iterator1.hasNext());
 
-                    itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
+                        itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
 
 
-                } while (iterator.hasNext());
-                Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
-                do {
-                    DataSnapshot dataSnapshot1 = iterator2.next();
-                    Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
-                    firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-                            photo.add(userForSearch.getPhoto_200());
-                            dialogListAdapter.notifyDataSetChanged();
-                            count++;
-                            if(idArray.size()==count){
-                                activity.binding.dialogList.setAdapter(dialogListAdapter);
+                    } while (iterator.hasNext());
+                    Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
+                    do {
+                        DataSnapshot dataSnapshot1 = iterator2.next();
+                        Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
+                        firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                                photo.add(userForSearch.getPhoto_200());
+                                dialogListAdapter.notifyDataSetChanged();
+                                count++;
+                                if (idArray.size() == count) {
+                                    activity.binding.dialogList.setAdapter(dialogListAdapter);
+                                }
+
                             }
 
-                        }
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                            }
+                        });
 
-                        }
-                    });
-
-                }while (iterator2.hasNext());
+                    } while (iterator2.hasNext());
+                }
             }
-
                 @Override
                 public void onCancelled (FirebaseError firebaseError){
 
