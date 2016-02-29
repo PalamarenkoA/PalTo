@@ -47,6 +47,9 @@
         <activity
             android:name=".activity.UserSettingsActivity"
             android:label="@string/title_activity_user_settings"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="65591074b1e3e51e55ea4312378116f3def798db" />
     </application>
 
 </manifest>
