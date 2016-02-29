@@ -33,7 +33,7 @@ public class SearchHelper {
         list = pointAdd(list,param,films,musiks,znakoms);
         int maxPoint = fiendMaxPoint(list, users);
 
-       return choiceUser(list,maxPoint);}
+       return choiceUser(list,maxPoint, users);}
 
     private int fiendMaxPoint(ArrayList<UserForSearch> list,ArrayList<String> users){
         int maxPoint = 0;
@@ -44,12 +44,12 @@ public class SearchHelper {
                 maxPoint = userForSearch.getPoints();
             }}}}
    return maxPoint; }
-    private UserForSearch choiceUser(ArrayList<UserForSearch> list,int maxPoint){
+    private UserForSearch choiceUser(ArrayList<UserForSearch> list,int maxPoint, ArrayList<String> users){
 
         ArrayList<UserForSearch> choices = new ArrayList<>();
         for (UserForSearch userForSearch : list){
             if(userForSearch.getPoints() == maxPoint && !userForSearch.getId()
-                    .equals(srefs.getString("VKUserID", "")) ){
+                    .equals(srefs.getString("VKUserID", "")) && !users.contains(userForSearch.getId())){
                     choices.add(userForSearch);
 
             }}

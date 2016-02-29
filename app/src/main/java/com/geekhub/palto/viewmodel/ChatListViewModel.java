@@ -31,7 +31,8 @@ public class ChatListViewModel {
     ChatListActivity activity;
     SharedPreferences srefs;
     int count = 0;
-    public ChatListViewModel (final ChatListActivity activity){
+
+    public ChatListViewModel(final ChatListActivity activity) {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         activity.setSupportActionBar(activity.binding.toolbar);
@@ -51,86 +52,93 @@ public class ChatListViewModel {
 
 
         final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
-        final ArrayList <String> idArray = new ArrayList<>();
+        final ArrayList<String> idArray = new ArrayList<>();
         final ArrayList<String> photo = new ArrayList<>();
         Firebase firebaseForListAdapter = new Firebase("https://paltochat.firebaseio.com");
         firebaseForListAdapter.keepSynced(true);
-        Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID","null"));
-        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity,itemDialogListArrayList,photo);
-        chatfirebase.orderByValue().limitToLast(10).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                do {
-                    DataSnapshot dataSnapshot1 = iterator.next();
-                    idArray.add(dataSnapshot1.getKey());
-                    ArrayList<ItemDialogList> arrayList = new ArrayList();
-                    Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
-                    do {
-                        arrayList.add(iterator1.next().getValue(ItemDialogList.class));
-                    } while (iterator1.hasNext());
+        Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID", "null"));
+        final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity, itemDialogListArrayList, photo);
+        chatfirebase.orderByValue().limitToLast(10).
+                addValueEventListener(new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(DataSnapshot dataSnapshot) {
+                                              Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                                              do {
+                                                  DataSnapshot dataSnapshot1 = iterator.next();
+                                                  idArray.add(dataSnapshot1.getKey());
+                                                  ArrayList<ItemDialogList> arrayList = new ArrayList();
+                                                  Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                                                  do {
+                                                      arrayList.add(iterator1.next().getValue(ItemDialogList.class));
+                                                  }
+                                                  while (iterator1.hasNext());
 
-                    itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
+                                                  itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
 
 
-                } while (iterator.hasNext());
-                Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
-                do {
-                    DataSnapshot dataSnapshot1 = iterator2.next();
-                    Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
-                    firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-                            photo.add(userForSearch.getPhoto_200());
-                            dialogListAdapter.notifyDataSetChanged();
-                            count++;
-                            if(idArray.size()==count){
-                                activity.binding.dialogList.setAdapter(dialogListAdapter);
-                            }
+                                              }
+                                              while (iterator.hasNext());
+                                              Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
+                                              do {
+                                                  DataSnapshot dataSnapshot1 = iterator2.next();
+                                                  Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
+                                                  firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                      @Override
+                                                      public void onDataChange(DataSnapshot dataSnapshot) {
+                                                          UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                                                          photo.add(userForSearch.getPhoto_200());
+                                                          dialogListAdapter.notifyDataSetChanged();
+                                                          count++;
+                                                          if (idArray.size() == count) {
+                                                              activity.binding.dialogList.setAdapter(dialogListAdapter);
+                                                          }
 
-                        }
+                                                      }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                                                      @Override
+                                                      public void onCancelled(FirebaseError firebaseError) {
 
-                        }
-                    });
+                                                      }
+                                                  });
 
-                }while (iterator2.hasNext());
-            }
+                                              }
+                                              while (iterator2.hasNext());
+                                          }
 
-                @Override
-                public void onCancelled (FirebaseError firebaseError){
+                                          @Override
+                                          public void onCancelled(FirebaseError firebaseError) {
 
-                }
-            }
+                                          }
+                                      }
 
-            );
+                );
 
-            activity.binding.dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        activity.binding.dialogList.
+                setOnItemClickListener(new AdapterView.OnItemClickListener()
 
-            {
+                                       {
 
-                @Override
-                public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
-                Intent intent = new Intent(activity, ChatActivity.class);
-                intent.putExtra("FriendID", idArray.get(position));
-                activity.startActivity(intent);
-            }
-            }
+                                           @Override
+                                           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                               Intent intent = new Intent(activity, ChatActivity.class);
+                                               intent.putExtra("FriendID", idArray.get(position));
+                                               intent.putExtra("FriendNick", dialogListAdapter.getItem(position).getNick());
+                                               activity.startActivity(intent);
+                                           }
+                                       }
 
-            );
-            activity.binding.addNewChatButton.setOnClickListener(new View.OnClickListener()
+                );
+        activity.binding.addNewChatButton.
+                setOnClickListener(new View.OnClickListener()
 
-                                                                 {
-                                                                     @Override
-                                                                     public void onClick(View v) {
-                                                                         activity.startActivity(new Intent(activity, SearchNewChatActivity.class));
-                                                                     }
-                                                                 }
+                                   {
+                                       @Override
+                                       public void onClick(View v) {
+                                           activity.startActivity(new Intent(activity, SearchNewChatActivity.class));
+                                       }
+                                   }
 
-            );
+                );
 
 
         }

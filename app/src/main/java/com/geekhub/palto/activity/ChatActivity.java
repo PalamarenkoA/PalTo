@@ -31,7 +31,7 @@ public class ChatActivity extends AppCompatActivity {
                 setContentView(this, R.layout.activity_chat);
         model = new ChatViewModel(this);
         binding.setModel(model);
-
-
-
+        setSupportActionBar(binding.toolbar);
+        String friendNick = getIntent().getStringExtra("FriendNick");
+        setTitle(String.format("Чат с \"%s\"", friendNick));
 }}
