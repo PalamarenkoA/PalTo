@@ -21,8 +21,8 @@
         android:layout_marginRight="10dp">
 
         <TextView
-            android:text="@{model.nick}"
-            android:id="@+id/nick"
+            android:text="@{model.lastMessageNick}"
+            android:id="@+id/lastMessageNick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -44,12 +44,12 @@
             android:paddingRight="2dp"
             android:paddingBottom="6dp"
             android:textSize="12sp"
-            android:layout_alignBottom="@+id/nick"/>
+            android:layout_alignBottom="@+id/lastMessageNick"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nick"
+            android:layout_below="@+id/lastMessageNick"
             android:layout_alignParentLeft="true"
             android:padding="12dp"
             android:background="@drawable/grey_bubble"

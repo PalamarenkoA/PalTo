@@ -78,14 +78,17 @@ public class ChatListViewModel {
 
                                               }
                                               while (iterator.hasNext());
-                                              Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
+                                              final Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
+                                              int i=0;
                                               do {
                                                   DataSnapshot dataSnapshot1 = iterator2.next();
                                                   Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
+                                                  final ItemDialogList item = dialogListAdapter.getItem(i);
                                                   firebase.addListenerForSingleValueEvent(new ValueEventListener() {
                                                       @Override
                                                       public void onDataChange(DataSnapshot dataSnapshot) {
                                                           UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                                                          item.setUserChatWithNick(userForSearch.getNick());
                                                           photo.add(userForSearch.getPhoto_200());
                                                           dialogListAdapter.notifyDataSetChanged();
                                                           count++;
@@ -100,7 +103,7 @@ public class ChatListViewModel {
 
                                                       }
                                                   });
-
+                                                  i++;
                                               }
                                               while (iterator2.hasNext());
                                           }
@@ -122,7 +125,7 @@ public class ChatListViewModel {
                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                Intent intent = new Intent(activity, ChatActivity.class);
                                                intent.putExtra("FriendID", idArray.get(position));
-                                               intent.putExtra("FriendNick", dialogListAdapter.getItem(position).getNick());
+                                               intent.putExtra("FriendNick", dialogListAdapter.getItem(position).getUserChatWithNick());
                                                activity.startActivity(intent);
                                            }
                                        }

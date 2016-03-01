@@ -1,15 +1,5 @@
 package com.geekhub.palto.object;
 
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.geekhub.palto.useragent.UserAgent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,12 +13,35 @@ public class ItemDialogList {
 
     }
 
+    public String id;
+    String iconImage;
+    String lastMessageNick;
+    String lastDate;
+    String lastMessage;
+    String received;
+    String userChatWithNick;
+
+
+
+    public ItemDialogList(String iconImage,String lastMessageNick, String lastMessage, String id, String received){
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String currentTimeStr = dateFormat.format(cal.getTime());
+        this.received = received;
+        this.iconImage = iconImage;
+        this.lastMessageNick = lastMessageNick;
+        this.lastDate = currentTimeStr;
+        this.lastMessage = lastMessage;
+        this.id=id;
+    }
+
     public String getIconImage() {
         return iconImage;
     }
 
-    public String getNick() {
-        return nick;
+    public String getLastMessageNick() {
+        return lastMessageNick;
     }
 
     public String getLastDate() {
@@ -43,8 +56,8 @@ public class ItemDialogList {
         this.iconImage = iconImage;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setLastMessageNick(String lastMessageNick) {
+        this.lastMessageNick = lastMessageNick;
     }
 
     public void setLastDate(String lastDate) {
@@ -54,13 +67,6 @@ public class ItemDialogList {
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
     }
-
-
-    String iconImage;
-    String nick;
-    String lastDate;
-    String lastMessage;
-
     public String getReceived() {
         return received;
     }
@@ -68,9 +74,6 @@ public class ItemDialogList {
     public void setReceived(String received) {
         this.received = received;
     }
-
-    String received;
-
     public String getId() {
         return id;
     }
@@ -79,20 +82,11 @@ public class ItemDialogList {
         this.id = id;
     }
 
-    public String id;
-
-
-    public ItemDialogList(String iconImage,String nick, String lastMessage, String id, String received){
-
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        String currentTimeStr = dateFormat.format(cal.getTime());
-        this.received = received;
-        this.iconImage = iconImage;
-        this.nick = nick;
-        this.lastDate = currentTimeStr;
-        this.lastMessage = lastMessage;
-        this.id=id;
+    public String getUserChatWithNick() {
+        return userChatWithNick;
     }
 
+    public void setUserChatWithNick(String userChatWithNick) {
+        this.userChatWithNick = userChatWithNick;
+    }
 }
