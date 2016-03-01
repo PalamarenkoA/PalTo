@@ -46,8 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@{model.nick}"
-                    android:id="@+id/nick"
+                    android:text="@{model.lastMessageNick}"
+                    android:id="@+id/lastMessageNick"
                     android:textSize="20sp"
                     android:layout_weight="1" />
 
