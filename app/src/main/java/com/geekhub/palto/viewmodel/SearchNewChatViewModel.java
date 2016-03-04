@@ -111,8 +111,6 @@ public class SearchNewChatViewModel {
     }
 
     public void startChat(View view){
-
-
         SearchHelper searchHelper = new SearchHelper();
         UserForSearch userForSearch = new UserForSearch();
         Interest interest = new Interest();

@@ -46,6 +46,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:clickable="true"
+            android:id="@+id/cityPicker"
             android:layout_height="match_parent">
 
             <ImageView
@@ -78,7 +80,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Черкассы"
                     android:textColor="@color/secondary_text"
-                    android:id="@+id/textView3"
+                    android:id="@+id/cityID"
                     android:layout_marginLeft="13dp"
                     android:textSize="16sp" />
             </LinearLayout>

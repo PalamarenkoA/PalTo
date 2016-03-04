@@ -28,6 +28,7 @@ import java.util.Collections;
 public class PalToChoicePicker extends LinearLayout {
     private TextView title;
     public TextView interests;
+    private LinearLayout linearLayout;
     private ImageButton plus;
     private ImageView icon;
     private int maxItems;
@@ -72,7 +73,7 @@ public class PalToChoicePicker extends LinearLayout {
         this.icon = (ImageView) findViewById(R.id.iconinteres);
         this.plus = (ImageButton) findViewById(R.id.imageButtonPlus);
         this.interests = (TextView) findViewById(R.id.interest);
-
+        this.linearLayout = (LinearLayout) findViewById(R.id.customPicker);
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PalToChoicePicker, defStyleAttr, defStyleRes);
@@ -112,7 +113,7 @@ public class PalToChoicePicker extends LinearLayout {
                         strings = context.getResources().getStringArray(R.array.eyes);
                         break;}}
             booleans = new boolean[strings.length];
-            plus.setOnClickListener(new OnClickListener() {
+            linearLayout.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     buildDialog(context);
@@ -189,6 +190,7 @@ public class PalToChoicePicker extends LinearLayout {
                                 b = false;
                             }
                             booleans[which] = true;
+                            interests.startAnimation(animation);
                             interests.setText(interestWhite(getInterestSet()));
                             dialog.dismiss();
                         }
