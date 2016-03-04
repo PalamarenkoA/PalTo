@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="content"
+            type="int"/>
+    </data>
+
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.andrey.myznakom.ScrollingActivity"
+    tools:showIn="@layout/activity_first_settings">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Основная информация"
+            android:textColor="@color/secondary_text"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@color/divider"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView3"
+                android:background="@drawable/ic_location"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Украина"
+                    android:textColor="@color/primary_text"
+                    android:id="@+id/textView2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Черкассы"
+                    android:textColor="@color/secondary_text"
+                    android:id="@+id/textView3"
+                    android:layout_marginLeft="13dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView4"
+                android:background="@drawable/ic_fimale"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView4"
+                android:layout_weight="1" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:layout_margin="20dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Информация для поиска"
+            android:textColor="@color/secondary_text"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@color/divider"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView"
+                android:background="@drawable/ic_nick"
+                android:layout_marginTop="10dp"
+                android:layout_margin="10dp" />
+
+            <com.geekhub.palto.customviews.MaterialEditText
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Отображаемый ник"
+                style="@style/ValidationEditTextStyle"
+                android:textColorHint="@color/secondary_text"
+                android:textColor="@color/primary_text"
+                android:ems="10"
+                app:validationType="person"
+                android:id="@+id/editTextNick"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1" />
+
+
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/imageView2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/camera_400"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp" />
+
+        </LinearLayout>
+
+        <com.geekhub.palto.customviews.PalToChoicePicker
+            android:layout_width="match_parent"
+            app:aboutPicker="musik"
+            android:layout_height="wrap_content"
+            android:id="@+id/musikInterestPicker"
+          />
+
+        <com.geekhub.palto.customviews.PalToChoicePicker
+            android:layout_width="match_parent"
+            app:aboutPicker="film"
+            android:layout_height="wrap_content"
+            android:id="@+id/filmInterestPicker"
+            />
+        <com.geekhub.palto.customviews.PalToChoicePicker
+            android:layout_width="match_parent"
+            app:aboutPicker="znak"
+            android:layout_height="wrap_content"
+            android:id="@+id/znakom_interest_picker"
+            />
+        <com.geekhub.palto.customviews.PalToChoicePicker
+            android:layout_width="match_parent"
+            app:aboutPicker="growth"
+            android:layout_height="wrap_content"
+            android:id="@+id/growth_interest_picker"
+            />
+        <com.geekhub.palto.customviews.PalToChoicePicker
+            android:layout_width="match_parent"
+            app:aboutPicker="eyes"
+            android:layout_height="wrap_content"
+            android:id="@+id/eyes_interest_picker"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:background="@drawable/rectangle_rounded"
+            android:text="Cохранить"
+            android:textColor="@color/white"
+            android:id="@+id/buttonSave"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
+</layout>

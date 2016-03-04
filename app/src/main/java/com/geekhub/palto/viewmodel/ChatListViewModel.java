@@ -63,6 +63,7 @@ public class ChatListViewModel {
                                           @Override
                                           public void onDataChange(DataSnapshot dataSnapshot) {
                                               Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                                              if(iterator.hasNext()){
                                               do {
                                                   DataSnapshot dataSnapshot1 = iterator.next();
                                                   idArray.add(dataSnapshot1.getKey());
@@ -106,7 +107,7 @@ public class ChatListViewModel {
                                                   i++;
                                               }
                                               while (iterator2.hasNext());
-                                          }
+                                          }}
 
                                           @Override
                                           public void onCancelled(FirebaseError firebaseError) {

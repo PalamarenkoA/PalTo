@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -8,167 +9,66 @@
             type="com.geekhub.palto.viewmodel.FirstSettingsViewModel" />
     </data>
 
-    <ScrollView
+    <android.support.design.widget.CoordinatorLayout
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".activity.FirstSettingsActivity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        tools:context="com.example.andrey.myznakom.ScrollingActivity">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="15dp">
-                <TextView
-                    android:id="@+id/hello_tv"
-                    android:text="Привет, Иван Иваныч!"
-                    android:layout_width="200dp"
-                    android:gravity="center"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_gravity="center"
-                    android:id="@+id/small_avatar_iv"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:elevation="5dp"/>
-            </LinearLayout>
-
-            <include layout="@layout/spec_sep"/>
-
-            <TextView
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Для того, чтобы начать использовать приложение, Вам следует заполнить небольшую анкету"
-                android:textAlignment="center" />
-            <TextView
-                android:layout_margin="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:text="Личная информация"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.geekhub.palto.customviews.MaterialEditText
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editTextNick"
-                    app:label="Отображаемое имя"
-                    app:validationType="person"
-                    app:bindingWithOnFocusValidation="@{model.nickName}"
-                    android:layout_gravity="center"
-                    style="@style/ValidationEditTextStyle"
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Аватар"/>
-
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    />
-                </LinearLayout>
-            </LinearLayout>
-
-            <ScrollView
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scrollView">
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-                <LinearLayout
-                    android:orientation="vertical"
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-                        android:id="@+id/musik_interest_picker"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pickerLabel="Любимая музыка"
-                        app:buttonTitle="Выбрать"
-                        app:my_message="Не больше 5 вариантов"/>
-                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-                        android:id="@+id/film_interest_picker"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pickerLabel="Любимые фильмы"
-                        app:buttonTitle="Выбрать"
-                        app:my_message="Не больше 5 вариантов"/>
-                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-                        android:id="@+id/znakom_interest_picker"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pickerLabel="Цель знакомства"
-                        app:buttonTitle="Выбрать"
-                        app:my_message="Не больше 3 вариантов"
-                        app:maxItems="3"/>
-                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-                        android:id="@+id/growth_interest_picker"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pickerLabel="Ваш рост"
-                        app:buttonTitle="Выбрать"
-                        app:isSingleChoisePicker="true"/>
+                    android:layout_height="match_parent"
+                    android:src="@drawable/photo"
+                    android:id="@+id/smallAvatarIv"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    />
 
-                    <com.geekhub.palto.customviews.PolToMultipleChoicePicker
-                        android:id="@+id/eyes_interest_picker"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:pickerLabel="Цвет ваших глаз"
-                        app:buttonTitle="Выбрать"
-                        app:isSingleChoisePicker="true"/>
-                </LinearLayout>
-            </ScrollView>
 
-        </LinearLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/content_first_settings"
+            android:id="@+id/content_first_settings"
+            app:content="@{1}"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="bottom">
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_reload"
+            android:tint="@color/icons"
+            app:layout_anchor="@id/app_bar"
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Сохранить"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:id="@+id/buttonSave" />
-        </LinearLayout>
+            android:background="@color/colorPrimaryDark"
+            app:layout_anchorGravity="bottom|end" />
 
-    </LinearLayout>
-    </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+
 </layout>
