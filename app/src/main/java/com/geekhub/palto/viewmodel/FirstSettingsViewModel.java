@@ -11,7 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.geekhub.palto.Helper.Helper;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
@@ -19,6 +23,7 @@ import com.geekhub.palto.binding.BindableString;
 import com.geekhub.palto.customviews.PalToChoicePicker;
 import com.geekhub.palto.customviews.PolToMultipleChoicePicker;
 import com.geekhub.palto.object.Item;
+import com.geekhub.palto.object.UserForSearch;
 import com.geekhub.palto.object.VKCItiesResponse;
 import com.geekhub.palto.useragent.UserAgent;
 import com.google.gson.Gson;
@@ -69,10 +74,46 @@ public class FirstSettingsViewModel {
     BindableString imageUrl = new BindableString();
     BindableString nickName = new BindableString();
 
+    private void setInterest (){
+        myFirebaseRef.child(srefs.getString("VKUserID", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
+                Helper helper = new Helper();
+                if (userForSearch.getInterest() != null ) {
+                    if(userForSearch.getInterest().getMusik() != null){
+                    activity.binding.contentFirstSettings.musikInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 1));}
+                    if(userForSearch.getInterest().getFilm() != null){
+                    activity.binding.contentFirstSettings.filmInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 0));}
+                    if(userForSearch.getInterest().getZnakom() != null){
+                    activity.binding.contentFirstSettings.znakomInterestPicker
+                            .setInterest(helper.createList(userForSearch.getInterest(), 2));}
+                    if (userForSearch.getInterest().getGrowth() != null){
+                    ArrayList<String> arrayList = new ArrayList();
+                    arrayList.add(userForSearch.getInterest().getGrowth());
+                    activity.binding.contentFirstSettings.growthInterestPicker.setInterest(arrayList);}
+                    if(userForSearch.getInterest().getEyes() != null){
+                    ArrayList<String> arrayList1 = new ArrayList();
+                    arrayList1.add(userForSearch.getInterest().getEyes());
+                    activity.binding.contentFirstSettings.eyesInterestPicker.setInterest(arrayList1);}
+                    if(userForSearch.getNick() != null){
+                    activity.binding.contentFirstSettings.editTextNick.setText(userForSearch.getNick());}
+                }
+            }
 
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
     public FirstSettingsViewModel(final FirstSettingsActivity activity) {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+        setInterest();
         activity.setSupportActionBar(activity.binding.toolbar);
         userId.set(UserAgent.get().getUserId());
         Picasso.with(activity).load(srefs.getString("VKUserICON", "")).placeholder(R.drawable.imgpsh_fullsize).into(activity.binding.smallAvatarIv);
@@ -97,7 +138,6 @@ public class FirstSettingsViewModel {
                 && !activity.binding.contentFirstSettings.growthInterestPicker.getInterestSet().isEmpty()
                 && !activity.binding.contentFirstSettings.eyesInterestPicker.getInterestSet().isEmpty()
                 && activity.binding.contentFirstSettings.editTextNick.getText().toString().length() > 2) {
-            myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
             pushToFireBase("musik", activity.binding.contentFirstSettings.musikInterestPicker);
             pushToFireBase("film", activity.binding.contentFirstSettings.filmInterestPicker);
             pushToFireBase("znakom", activity.binding.contentFirstSettings.znakomInterestPicker);

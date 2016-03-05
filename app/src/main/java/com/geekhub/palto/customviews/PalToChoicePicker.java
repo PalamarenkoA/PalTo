@@ -84,19 +84,21 @@ public class PalToChoicePicker extends LinearLayout {
                         title.setText(R.string.musik);
                         maxItems = 5;
                         strings = context.getResources().getStringArray(R.array.musik);
-
+                        interests.setText("Укажите от 1 до 5 жанров музыки");
                         break;
                     case (FILM):
                      icon.setImageResource(R.drawable.ic_film);
                         title.setText(R.string.film);
                         maxItems = 5;
                         strings = context.getResources().getStringArray(R.array.film);
+                        interests.setText("Укажите от 1 до 5 жанров фильмов");
                         break;
                     case (ZNAK):
                         icon.setImageResource(R.drawable.ic_znak);
                         title.setText(R.string.znak);
                         maxItems = 3;
                         strings = context.getResources().getStringArray(R.array.znakom);
+                        interests.setText("Укажите от 1 до 3 целей знакомства");
                         break;
                     case (GROWTH):
                         icon.setImageResource(R.drawable.ic_walk);
@@ -104,6 +106,7 @@ public class PalToChoicePicker extends LinearLayout {
                         maxItems = 1;
                         isSingleChoise = true;
                         strings = context.getResources().getStringArray(R.array.growth);
+                        interests.setText("Укажите ваш рост");
                         break;
                     case (EYES):
                         icon.setImageResource(R.drawable.ic_eyes);
@@ -111,6 +114,7 @@ public class PalToChoicePicker extends LinearLayout {
                         maxItems = 1;
                         isSingleChoise = true;
                         strings = context.getResources().getStringArray(R.array.eyes);
+                        interests.setText("Укажите цвет ваших глаз");
                         break;}}
             booleans = new boolean[strings.length];
             linearLayout.setOnClickListener(new OnClickListener() {
@@ -159,7 +163,8 @@ public class PalToChoicePicker extends LinearLayout {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     interests.startAnimation(animation);
-                    interests.setText(interestWhite(getInterestSet()));
+                    if(interestWhite(getInterestSet()).length()>0){
+                    interests.setText(interestWhite(getInterestSet()));}
 
                     dialog.dismiss();
                 }
@@ -171,6 +176,8 @@ public class PalToChoicePicker extends LinearLayout {
                     for (boolean b : booleans) {
                         b = false;
                     }
+                    interests.startAnimation(animation);
+
                     dialog.dismiss();
                 }
             });
@@ -191,7 +198,8 @@ public class PalToChoicePicker extends LinearLayout {
                             }
                             booleans[which] = true;
                             interests.startAnimation(animation);
-                            interests.setText(interestWhite(getInterestSet()));
+                            if(interestWhite(getInterestSet()).length()>0){
+                            interests.setText(interestWhite(getInterestSet()));}
                             dialog.dismiss();
                         }
                     }).setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
@@ -212,12 +220,13 @@ public class PalToChoicePicker extends LinearLayout {
     public String interestWhite(ArrayList<String> arrayList){
     String interest = "";
         for(int i = 0; i<arrayList.size();i++){
+            if(arrayList.get(i)!=null){
             if(interest.length()>0){
                 interest = interest + ", " + arrayList.get(i);
             }else{
                 interest = arrayList.get(i);
             }
-        }
+        }}
     return  interest;}
     public ArrayList<String> getInterestSet(){
         ArrayList<String> set = new ArrayList<>();
@@ -229,5 +238,12 @@ public class PalToChoicePicker extends LinearLayout {
             }}
         return set;
     }
-
+    public void setInterest(ArrayList<String> arrayList){
+        interests.setText(interestWhite(arrayList));
+        for (int i=0;i<strings.length;i++){
+            if(arrayList.contains(strings[i])){
+                booleans[i] = true;
+            }
+        }
+    }
 }
