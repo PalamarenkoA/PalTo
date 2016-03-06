@@ -12,6 +12,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.activity.ChatActivity;
+import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.activity.UserInfoActivity;
 import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.adapter.NewChatAdapter;
@@ -95,8 +96,7 @@ public class ChatViewModel {
         activity.startActivity(intent);
     }
     public void clickUserSettings (View view){
-        Intent intent = new Intent(activity, UserSettingsActivity.class);
-        intent.putExtra("FriendID", srefs.getString("VKUserID",""));
+        Intent intent = new Intent(activity, FirstSettingsActivity.class);
         activity.startActivity(intent);
     }
 }

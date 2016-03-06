@@ -15,6 +15,7 @@ import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
 import com.geekhub.palto.activity.ChatActivity;
 import com.geekhub.palto.activity.ChatListActivity;
+import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.activity.SearchNewChatActivity;
 import com.geekhub.palto.activity.UserSettingsActivity;
 import com.geekhub.palto.adapter.DialogListAdapter;
@@ -41,8 +42,7 @@ public class ChatListViewModel {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item1:
-                        Intent intent = new Intent(activity, UserSettingsActivity.class);
-                        intent.putExtra("FriendID", srefs.getString("VKUserID", ""));
+                        Intent intent = new Intent(activity, FirstSettingsActivity.class);
                         activity.startActivity(intent);
                         break;
                 }
