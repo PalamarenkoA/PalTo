@@ -34,7 +34,7 @@ public class ChatViewModel {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         Firebase.setAndroidContext(activity.getApplicationContext());
-        myFirebaseRef = new Firebase("https://paltochat.firebaseio.com/");
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/").child("message");
         myFirebaseRef.keepSynced(true);
         intent = activity.getIntent();
 
@@ -74,7 +74,7 @@ public class ChatViewModel {
         chatList.setAdapter(newChatAdapter);
         chatList.smoothScrollToPosition(chatList.getBottom());
 
-        Firebase firebase = new Firebase("https://palto.firebaseio.com/").child(intent.getStringExtra("FriendID"));
+        Firebase firebase = new Firebase("https://palto.firebaseio.com/").child("members").child(intent.getStringExtra("FriendID"));
         firebase.keepSynced(true);
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

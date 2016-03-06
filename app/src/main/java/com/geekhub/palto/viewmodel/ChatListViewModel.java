@@ -54,60 +54,40 @@ public class ChatListViewModel {
         final ArrayList<ItemDialogList> itemDialogListArrayList = new ArrayList<>();
         final ArrayList<String> idArray = new ArrayList<>();
         final ArrayList<String> photo = new ArrayList<>();
-        Firebase firebaseForListAdapter = new Firebase("https://paltochat.firebaseio.com");
+        Firebase firebaseForListAdapter = new Firebase("https://palto.firebaseio.com");
         firebaseForListAdapter.keepSynced(true);
-        Firebase chatfirebase = firebaseForListAdapter.child(srefs.getString("VKUserID", "null"));
+
         final DialogListAdapter dialogListAdapter = new DialogListAdapter(activity, itemDialogListArrayList, photo);
-        chatfirebase.orderByValue().limitToLast(10).
+        firebaseForListAdapter.orderByValue().limitToLast(10).
                 addValueEventListener(new ValueEventListener() {
                                           @Override
                                           public void onDataChange(DataSnapshot dataSnapshot) {
-                                              Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                                              if(iterator.hasNext()){
-                                              do {
-                                                  DataSnapshot dataSnapshot1 = iterator.next();
-                                                  idArray.add(dataSnapshot1.getKey());
-                                                  ArrayList<ItemDialogList> arrayList = new ArrayList();
-                                                  Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                                              DataSnapshot chatDataSnapshot = dataSnapshot.child("message").child(srefs.getString("VKUserID", ""));
+
+                                              Iterator<DataSnapshot> iterator = chatDataSnapshot.getChildren().iterator();
+                                              if(iterator.hasNext()) {
                                                   do {
-                                                      arrayList.add(iterator1.next().getValue(ItemDialogList.class));
+                                                      DataSnapshot dataSnapshot1 = iterator.next();
+                                                      idArray.add(dataSnapshot1.getKey());
+                                                      DataSnapshot membersDataSnapshot = dataSnapshot.child("members").child(dataSnapshot1.getKey());
+                                                      UserForSearch userForSearch = membersDataSnapshot.getValue(UserForSearch.class);
+                                                      photo.add(userForSearch.getPhoto_200());
+                                                      dialogListAdapter.notifyDataSetChanged();
+                                                      ArrayList<ItemDialogList> arrayList = new ArrayList();
+                                                      Iterator<DataSnapshot> iterator1 = dataSnapshot1.getChildren().iterator();
+                                                      do {
+                                                          arrayList.add(iterator1.next().getValue(ItemDialogList.class));
+                                                      }
+                                                      while (iterator1.hasNext());
+
+                                                      itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
+
+
                                                   }
-                                                  while (iterator1.hasNext());
-
-                                                  itemDialogListArrayList.add(arrayList.get(arrayList.size() - 1));
-
-
-                                              }
-                                              while (iterator.hasNext());
-                                              final Iterator<DataSnapshot> iterator2 = dataSnapshot.getChildren().iterator();
-                                              int i=0;
-                                              do {
-                                                  DataSnapshot dataSnapshot1 = iterator2.next();
-                                                  Firebase firebase = new Firebase("https://palto.firebaseio.com").child(dataSnapshot1.getKey());
-                                                  final ItemDialogList item = dialogListAdapter.getItem(i);
-                                                  firebase.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                      @Override
-                                                      public void onDataChange(DataSnapshot dataSnapshot) {
-                                                          UserForSearch userForSearch = dataSnapshot.getValue(UserForSearch.class);
-                                                          item.setUserChatWithNick(userForSearch.getNick());
-                                                          photo.add(userForSearch.getPhoto_200());
-                                                          dialogListAdapter.notifyDataSetChanged();
-                                                          count++;
-                                                          if (idArray.size() == count) {
-                                                              activity.binding.dialogList.setAdapter(dialogListAdapter);
-                                                          }
-
-                                                      }
-
-                                                      @Override
-                                                      public void onCancelled(FirebaseError firebaseError) {
-
-                                                      }
-                                                  });
-                                                  i++;
-                                              }
-                                              while (iterator2.hasNext());
-                                          }}
+                                                  while (iterator.hasNext());}
+                                              dialogListAdapter.notifyDataSetChanged();
+                                              activity.binding.dialogList.setAdapter(dialogListAdapter);
+                                      }
 
                                           @Override
                                           public void onCancelled(FirebaseError firebaseError) {

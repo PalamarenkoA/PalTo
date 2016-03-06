@@ -47,7 +47,7 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/").child("members");
         ID = new ArrayList<>();
         context = this;
         String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
@@ -152,7 +152,8 @@ public class LogInActivity extends AppCompatActivity {
                             }else{
                                 addToFirebase(res);
                             }
-                        }
+                        }else{
+                        addToFirebase(res);}
                     }
 
                     @Override

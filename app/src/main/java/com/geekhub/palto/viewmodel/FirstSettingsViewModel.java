@@ -112,7 +112,7 @@ public class FirstSettingsViewModel {
     public FirstSettingsViewModel(final FirstSettingsActivity activity) {
         this.activity = activity;
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-        myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/").child("members");
         setInterest();
         activity.setSupportActionBar(activity.binding.toolbar);
         userId.set(UserAgent.get().getUserId());
