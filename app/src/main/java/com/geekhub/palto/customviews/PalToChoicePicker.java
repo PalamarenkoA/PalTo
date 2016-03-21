@@ -55,6 +55,7 @@ public class PalToChoicePicker extends LinearLayout {
         initView(context, attrs, defStyleAttr, defStyleRes);
     }
 
+
     public PalToChoicePicker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, attrs, defStyleAttr, 0);
