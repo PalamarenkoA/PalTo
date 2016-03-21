@@ -21,8 +21,6 @@ public class LoginActivityViewModel {
 
     public LoginActivityViewModel(LogInActivity activity) {
         this.activity = activity;
-//        Intent serviseIntent = new Intent(activity, MessageListener.class);
-//        activity.startService(serviseIntent);
         SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity);
         if (UserAgent.get().getToken().length()>0){
             Intent intent;

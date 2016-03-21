@@ -56,4 +56,16 @@
         <attr name="my_message" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="PalToChoicePicker">
+        <attr name="titleLable" format="string"/>
+        <attr name="aboutPicker" format="enum">
+            <enum name="musik" value="0"/>
+            <enum name="film" value="1"/>
+            <enum name="znak" value="2"/>
+            <enum name="growth" value="3"/>
+            <enum name="eyes" value="4"/>
+        </attr>
+
+    </declare-styleable>
+
 </resources>

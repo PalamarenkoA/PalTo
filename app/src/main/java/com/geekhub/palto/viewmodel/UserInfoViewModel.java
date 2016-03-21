@@ -21,7 +21,7 @@ public class UserInfoViewModel {
     UserForSearch userForSearch;
     public  UserInfoViewModel(final UserInfoActivity activity){
         intent = activity.getIntent();
-        myFirebaseRef = new Firebase("https://palto.firebaseio.com/").child(intent.getStringExtra("FriendID"));
+        myFirebaseRef = new Firebase("https://palto.firebaseio.com/").child("members").child(intent.getStringExtra("FriendID"));
         this.activity = activity;
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

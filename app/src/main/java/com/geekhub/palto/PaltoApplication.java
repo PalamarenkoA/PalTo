@@ -11,6 +11,7 @@ import com.geekhub.palto.useragent.UserAgent;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
+
 import io.fabric.sdk.android.Fabric;
 
 /**

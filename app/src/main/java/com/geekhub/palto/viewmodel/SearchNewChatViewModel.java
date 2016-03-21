@@ -33,7 +33,6 @@ public class SearchNewChatViewModel {
 
     SearchNewChatActivity activity;
     private Firebase myFirebaseRef;
-    private Firebase myFirebaseChat;
     private ChildEventListener mListener;
     ArrayList<UserForSearch> list;
     SharedPreferences srefs;
@@ -43,8 +42,8 @@ public class SearchNewChatViewModel {
         srefs = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         this.activity = activity;
         myFirebaseRef = new Firebase("https://palto.firebaseio.com/");
-        myFirebaseChat = new Firebase("https://paltochat.firebaseio.com/");
-        Firebase firebase = myFirebaseChat.child(srefs.getString("VKUserID",""));
+
+        Firebase firebase = myFirebaseRef.child("message").child(srefs.getString("VKUserID", ""));
         firebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,7 +62,7 @@ public class SearchNewChatViewModel {
         });
         list = new ArrayList<>();
 
-        myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myFirebaseRef.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> iterable = dataSnapshot.getChildren().iterator();
@@ -111,8 +110,6 @@ public class SearchNewChatViewModel {
     }
 
     public void startChat(View view){
-
-
         SearchHelper searchHelper = new SearchHelper();
         UserForSearch userForSearch = new UserForSearch();
         Interest interest = new Interest();
@@ -135,8 +132,8 @@ public class SearchNewChatViewModel {
             ItemDialogList firstMes = new ItemDialogList(srefs.getString("VKUserICON", "null"),
                     srefs.getString("VKUserNICK", "null"), "Привет", srefs.getString("VKUserID", ""), "0");
 
-            myFirebaseChat.child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
-            myFirebaseChat.child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
+            myFirebaseRef.child("message").child(choice.getId()).child(srefs.getString("VKUserID", "null")).push().setValue(firstMes);
+            myFirebaseRef.child("message").child(srefs.getString("VKUserID", "null")).child(choice.getId()).push().setValue(firstMes);
             Intent intent = new Intent(activity, ChatActivity.class);
             intent.putExtra("FriendID", choice.getId());
             activity.startActivity(intent);

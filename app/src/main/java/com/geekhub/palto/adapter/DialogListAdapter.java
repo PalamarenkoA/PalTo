@@ -21,6 +21,7 @@ public class DialogListAdapter extends BaseAdapter{
     ArrayList <ItemDialogList>dialogArrayList;
     Context context;
     ArrayList<String> iDAraay;
+
     public DialogListAdapter(Context context, ArrayList <ItemDialogList>dialogArrayList, ArrayList<String> arrayList){
         this.dialogArrayList = dialogArrayList;
         this.context = context;
