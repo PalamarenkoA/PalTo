@@ -32,9 +32,10 @@
                 />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
                 android:layout_height="wrap_content"
-                android:text="+"
+                android:text="Начать поиск нового чата"
                 android:id="@+id/addNewChatButton"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true" />
