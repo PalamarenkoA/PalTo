@@ -8,13 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
 import com.geekhub.palto.object.ItemDialogList;
-import com.geekhub.palto.object.UserForSearch;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,6 +21,7 @@ public class DialogListAdapter extends BaseAdapter{
     ArrayList <ItemDialogList>dialogArrayList;
     Context context;
     ArrayList<String> iDAraay;
+
     public DialogListAdapter(Context context, ArrayList <ItemDialogList>dialogArrayList, ArrayList<String> arrayList){
         this.dialogArrayList = dialogArrayList;
         this.context = context;
@@ -66,7 +62,7 @@ public class DialogListAdapter extends BaseAdapter{
             viewHolder.iconImageLastMes = (ImageView) convertView.findViewById(R.id.iconImageLastMes);
             viewHolder.lastDate = (TextView) convertView.findViewById(R.id.lastDate);
             viewHolder.lastMessage = (TextView) convertView.findViewById(R.id.lastMessage);
-            viewHolder.nick = (TextView) convertView.findViewById(R.id.nick);
+            viewHolder.nick = (TextView) convertView.findViewById(R.id.lastMessageNick);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -74,7 +70,7 @@ public class DialogListAdapter extends BaseAdapter{
         Picasso.with(context).load(dialogArrayList.get(position).getIconImage()).into(viewHolder.iconImageLastMes);
         viewHolder.lastDate.setText(dialogArrayList.get(position).getLastDate());
         viewHolder.lastMessage.setText(dialogArrayList.get(position).getLastMessage());
-        viewHolder.nick.setText(dialogArrayList.get(position).getNick());
+        viewHolder.nick.setText(dialogArrayList.get(position).getLastMessageNick());
         Picasso.with(context).load(iDAraay.get(position)).into(viewHolder.iconImage);
         return convertView;
 

@@ -5,4 +5,5 @@
     <dimen name="progress_size">70dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="tab_host_default_height">48dp</dimen>
+    <dimen name="dot_size_indicator">14dp</dimen>
 </resources>

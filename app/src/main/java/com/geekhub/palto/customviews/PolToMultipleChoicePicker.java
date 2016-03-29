@@ -133,7 +133,9 @@ public class PolToMultipleChoicePicker extends LinearLayout {
     private void setLabelText(String text){
         mLabelTv.setText(text);
     }
+    private void setButtobImage(int i){
 
+    }
     private void setButtobnTitle(String text){
         button.setText(text);
     }
@@ -198,7 +200,6 @@ public class PolToMultipleChoicePicker extends LinearLayout {
             }
         });
     }
-
     private String[] initCharSequences(ArrayList<String> list){
         strings=new String[list.size()];
         booleans = new boolean[list.size()];
@@ -210,7 +211,6 @@ public class PolToMultipleChoicePicker extends LinearLayout {
         }
         return strings;
     }
-
     private void buildDialog(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (!isSingleChoise) {

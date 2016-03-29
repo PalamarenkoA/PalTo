@@ -85,7 +85,7 @@ public class MessageListener extends Service {
                     if (arrayList.size() > 1) {
                         ArrayList<String> arrayList1 = new ArrayList<String>();
                         for (int i = 0; i < arrayList.size(); i++) {
-                            arrayList1.add(arrayList.get(i).getNick());
+                            arrayList1.add(arrayList.get(i).getLastMessageNick());
                         }
                         createSeveralNotification(context, arrayList1);
 
@@ -112,7 +112,7 @@ public class MessageListener extends Service {
         android.support.v4.app.NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.icon)
                 .setContentText(itemDialogList.getLastMessage())
-                .setContentTitle(itemDialogList.getNick())
+                .setContentTitle(itemDialogList.getLastMessageNick())
                 .setContentIntent(pendingIntentApp)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 

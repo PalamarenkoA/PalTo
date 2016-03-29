@@ -127,6 +127,11 @@
         <item>  Эмокор</item>
 
     </string-array>
+    <string name="musik">Любимая музыка</string>
+    <string name="film">Любимые фильмы</string>
+    <string name="znak">Цель знакомства</string>
+    <string name="growth">Ваш рост</string>
+    <string name="eyes">Цвет ваших глаз</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_search_new_chat">SearchNewChat</string>
     <string name="title_activity_main">MainActivity</string>
