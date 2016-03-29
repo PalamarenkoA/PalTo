@@ -28,5 +28,10 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
 
-    <color name="chat_card_color">#979797</color>
+    <color name="chat_card_color">#36979797</color>
+    <color name="dot_not_selected">#bdbdbd</color>
+    <color name="dot_selected">#fbc122</color>
+    <color name="background_material_dark">#d8f7ff</color>
+
+    <color name="chat_background">#003f61</color>
 </resources>

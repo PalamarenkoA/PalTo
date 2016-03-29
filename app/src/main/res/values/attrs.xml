@@ -68,4 +68,8 @@
 
     </declare-styleable>
 
+    <declare-styleable name="OleniDotPageIndicator">
+
+    </declare-styleable>
+
 </resources>

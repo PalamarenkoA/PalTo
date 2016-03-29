@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.client.DataSnapshot;
@@ -14,10 +15,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.geekhub.palto.R;
+import com.geekhub.palto.customviews.splash.MySplashScreenPagerAdapter;
+import com.geekhub.palto.customviews.splash.SplahFrag;
+import com.geekhub.palto.databinding.ActivityLogInBinding;
+import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
 import com.geekhub.palto.servise.MessageListener;
-import com.geekhub.palto.object.User;
-import com.geekhub.palto.databinding.ActivityLogInBinding;
 import com.geekhub.palto.viewmodel.LoginActivityViewModel;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -36,7 +39,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity implements SplahFrag.OnFragmentInteractionListener {
 
     private LoginActivityViewModel model;
     Firebase myFirebaseRef;
@@ -55,11 +58,10 @@ public class LogInActivity extends AppCompatActivity {
             Log.d("log",fingerprints[i]);
         }
         ActivityLogInBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_log_in);
-        model = new LoginActivityViewModel(this);
+        MySplashScreenPagerAdapter adapter = new MySplashScreenPagerAdapter(getSupportFragmentManager());
+        model = new LoginActivityViewModel(this, binding, adapter.getCount());
         binding.setModel(model);
-
-
-
+        binding.pager.setAdapter(adapter);
     }
     public void addToFirebase(VKAccessToken res){
         edit = PreferenceManager.
@@ -171,5 +173,10 @@ public class LogInActivity extends AppCompatActivity {
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
