@@ -24,6 +24,10 @@ public class NewChatAdapter extends FirebaseRecyclerAdapter<NewChatAdapter.ViewH
         this.activity=activity;
     }
 
+    public NewChatAdapter(Query query, Class<ItemDialogList> itemClass) {
+        super(query, itemClass);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){

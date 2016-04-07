@@ -25,8 +25,8 @@ import com.geekhub.palto.object.ItemDialogList;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MessageListener extends Service {
-    public MessageListener() {
+public class MessageListenerOLD extends Service {
+    public MessageListenerOLD() {
     }
 
     Context context;

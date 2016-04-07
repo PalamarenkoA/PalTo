@@ -32,25 +32,34 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.FirstSettingsActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SearchNewChatActivity"
             android:label="@string/title_activity_search_new_chat"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".servise.MessageListener"
+            android:name=".servise.MessageListenerOLD"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".activity.UserInfoActivity" />
         <activity
             android:name=".activity.UserSettingsActivity"
-            android:label="@string/title_activity_user_settings"/>
+            android:label="@string/title_activity_user_settings" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="65591074b1e3e51e55ea4312378116f3def798db" />
+
+        <service
+            android:name=".servise.ChatListener"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".servise.NotivicationIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
