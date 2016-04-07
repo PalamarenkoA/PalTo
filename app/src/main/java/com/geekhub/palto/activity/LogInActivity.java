@@ -20,7 +20,7 @@ import com.geekhub.palto.customviews.splash.SplahFrag;
 import com.geekhub.palto.databinding.ActivityLogInBinding;
 import com.geekhub.palto.object.User;
 import com.geekhub.palto.object.UserForSearch;
-import com.geekhub.palto.servise.MessageListener;
+import com.geekhub.palto.servise.MessageListenerOLD;
 import com.geekhub.palto.viewmodel.LoginActivityViewModel;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -69,7 +69,7 @@ public class LogInActivity extends AppCompatActivity implements SplahFrag.OnFrag
         edit.putString("VKAccessToken", res.accessToken).apply();
         edit.putString("VKUserID", res.userId).apply();
         authorized=true;
-        Intent serviseIntent = new Intent(context, MessageListener.class);
+        Intent serviseIntent = new Intent(context, MessageListenerOLD.class);
         serviseIntent.putExtra("ID",res.userId);
         context.startService(serviseIntent);
         VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200,photo_max"));
@@ -103,7 +103,7 @@ public class LogInActivity extends AppCompatActivity implements SplahFrag.OnFrag
         edit.putString("VKAccessToken", res.accessToken).apply();
         edit.putString("VKUserID", res.userId).apply();
         authorized=true;
-        Intent serviseIntent = new Intent(context, MessageListener.class);
+        Intent serviseIntent = new Intent(context, MessageListenerOLD.class);
         serviseIntent.putExtra("ID",res.userId);
         context.startService(serviseIntent);
         VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,"sex, bdate,city,country, photo_200,photo_max"));
