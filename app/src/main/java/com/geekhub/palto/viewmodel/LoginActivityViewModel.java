@@ -10,7 +10,7 @@ import com.geekhub.palto.activity.ChatListActivity;
 import com.geekhub.palto.activity.FirstSettingsActivity;
 import com.geekhub.palto.activity.LogInActivity;
 import com.geekhub.palto.databinding.ActivityLogInBinding;
-import com.geekhub.palto.servise.MessageListener;
+import com.geekhub.palto.servise.ChatListener;
 import com.geekhub.palto.useragent.UserAgent;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
@@ -28,17 +28,20 @@ public class LoginActivityViewModel {
         this.activity = activity;
         this.binding = binding;
         SharedPreferences srefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        if (UserAgent.get().getToken().length()>0){
+        if (UserAgent.get().getToken().length() > 0) {
             Intent intent;
-            if(srefs.getString("VKUserFirstSettings","").length()>0){
-                LogInActivity.authorized=true;
-                Intent serviseIntent = new Intent(activity, MessageListener.class);
-                serviseIntent.putExtra("ID", UserAgent.get().getUserId());
+            if (srefs.getString("VKUserFirstSettings", "").length() > 0) {
+                LogInActivity.authorized = true;
+//                Intent serviseIntent = new Intent(activity, MessageListenerOLD.class);
+//                serviseIntent.putExtra("ID", UserAgent.get().getUserId());
+//                activity.startService(serviseIntent);
+                Intent serviseIntent = new Intent(activity, ChatListener.class);
+                serviseIntent.putExtra("FriendID", "0000000");
                 activity.startService(serviseIntent);
-            intent = new Intent(activity, ChatListActivity.class);
-            }else{
-            intent = new Intent(activity, FirstSettingsActivity.class);
-           }
+                intent = new Intent(activity, ChatListActivity.class);
+            } else {
+                intent = new Intent(activity, FirstSettingsActivity.class);
+            }
             activity.startActivity(intent);
         }
         setCountOfItemsInAdapter(count);
@@ -95,7 +98,7 @@ public class LoginActivityViewModel {
         this.countOfItemsInAdapter = countOfItemsInAdapter;
     }
 
-    public void auth (View view){
+    public void auth(View view) {
         String[] myScope = new String[]{VKScope.OFFLINE, VKScope.EMAIL, VKScope.PHOTOS};
         VKSdk.login(activity, myScope);
     }
